@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "bautizos-tauri",
+    "productName": "Bautizos Arcadia",
     "version": "0.1.0"
   },
   "tauri": {
@@ -15,13 +15,25 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "dialog": {
+        "all": true
+      },
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "scope": [
+          "$DOCUMENT/certificados/*"
+        ]
       }
     },
     "windows": [
       {
-        "title": "bautizos-tauri",
-        "width": 800,
-        "height": 600
+        "title": "Bautizos Arcadia",
+        "maximized": true,
+        "resizable": true
       }
     ],
     "security": {

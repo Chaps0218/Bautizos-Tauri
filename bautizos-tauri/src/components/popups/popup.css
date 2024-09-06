@@ -1,0 +1,67 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-content {
+    background: rgba(255, 255, 255, 1);
+    padding: 1.5em;
+    border-radius: 8px;
+    /* border: 1px solid #000000; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    width: 80vw;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+}
+
+#cancelar {
+    background-color: #9e7373;
+}
+
+.escondio {
+    display: none;
+}
+
+.form {
+    grid-template-rows: repeat(8, 12%);
+    grid-row-gap: 1vh;
+    padding-bottom: 2vh;
+}
+
+.trioNum {
+    padding-left: 5vw;
+}
+
+.input-separado {
+    padding-top: 2.5vh;
+}
+
+.input-separado-2 {
+    padding-top: 1.6vh;
+}
+
+
+.h2-est {
+    margin-bottom: 6.5vmax;
+}
+
+.h2-usu {
+    margin-bottom: 3vmax;
+}
+
+
+/* -----------confirmados */
+.card {
+    background-color: #D9D9D9;
+}
