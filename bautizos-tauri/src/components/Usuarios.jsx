@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { amber } from '@mui/material/colors';
 import '../App.css';
 import PopupUsuario from './popups/PopupUsuario';
 
@@ -72,11 +72,11 @@ function Usuarios() {
             console.error(error);
         }
     };
-    const ColorButtonRed = styled(Fab)(({ theme }) => ({
-        color: theme.palette.getContrastText(red[900]),
-        backgroundColor: red[900],
+    const ColorButtonAmber = styled(Fab)(({ theme }) => ({
+        color: theme.palette.getContrastText(amber[900]),
+        backgroundColor: amber[600],
         '&:hover': {
-            backgroundColor: red[500],
+            backgroundColor: amber[900],
         },
     }));
 
@@ -127,9 +127,9 @@ function Usuarios() {
             </div>
             <div className='fab-container'>
                 <Tooltip title="Agregar Confirmado">
-                    <ColorButtonRed color="error" aria-label="add" onClick={() => handleOpenPopup()}>
+                    <ColorButtonAmber color="error" aria-label="add" onClick={() => handleOpenPopup()}>
                         <AddIcon />
-                    </ColorButtonRed >
+                    </ColorButtonAmber >
                 </Tooltip>
             </div>
             <PopupUsuario

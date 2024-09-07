@@ -14,7 +14,7 @@ import { writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 import { documentDir } from '@tauri-apps/api/path';
 
 import { styled } from '@mui/material/styles';
-import { blueGrey } from '@mui/material/colors';
+import { teal } from '@mui/material/colors';
 import { red } from '@mui/material/colors';
 
 function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
@@ -172,10 +172,10 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
     if (!isOpen) return null;
 
     const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(blueGrey[900]),
-        backgroundColor: blueGrey[900],
+        color: theme.palette.getContrastText(red[500]),
+        backgroundColor: teal[300],
         '&:hover': {
-            backgroundColor: blueGrey[500],
+            backgroundColor: teal[500],
         },
     }));
 
