@@ -5,6 +5,7 @@ mod models;
 use models::{
     Ministro, MinistroAdd, 
     UserAdd, UserLista, UserLogin, UserMod,
+    Bautizado, BautizadoAdd, BautizadoMod
 };
 
 use bcrypt::{hash, verify, DEFAULT_COST};
@@ -262,6 +263,16 @@ async fn flush_min_actual() -> Result<String, String> {
     }
 }
 
+#[tauri::command]
+async fn get_all_bautizados() -> Result<Vec<Bautizado>, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let bautizados: Vec<Bautizado> = conn
+        .query("select bau.*, ma.min_nombre as bau_min_nombre, mb.min_nombre as bau_mincert_nombre from bautizado as bau inner join ministro as ma on bau.bau_min_bau = ma.min_id inner join ministro as mb on bau.bau_min_cert = mb.min_id")
+        .map_err(|e| e.to_string())?;
+
+    Ok(bautizados)
+}
+
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
@@ -281,7 +292,8 @@ fn main() {
             handle_add_ministro,
             handle_modify_ministro,
             flush_min_actual,
-            open_file
+            open_file,
+            get_all_bautizados
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

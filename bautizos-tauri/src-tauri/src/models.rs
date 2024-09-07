@@ -60,3 +60,73 @@ pub struct MinistroAdd {
     pub min_b_parroco: i32,
     pub min_parroco_actual: i32,
 }
+
+#[derive(Serialize, Deserialize, FromRow)]
+pub struct Bautizado {
+    pub bau_id: i32,
+    pub bau_nombres: String,
+    pub bau_apellidos: String,
+    pub bau_cedula: String,
+    pub bau_fecha_nac: String,
+    pub bau_lugar_nac: String,
+    pub bau_min_bau: i32,
+    pub bau_minbau_nombre: String,
+    pub bau_padre: Option<String>,
+    pub bau_madre: Option<String>,
+    pub bau_padrinos: String,
+    pub bau_min_cert: i32,
+    pub bau_mincert_nombre: String,
+    pub bau_fecha_bau: String,
+    pub bau_tomo: Option<i32>,
+    pub bau_pag: Option<i32>,
+    pub bau_num: Option<i32>,
+    pub bau_tomo_nac: Option<i32>,
+    pub bau_pag_nac: Option<i32>,
+    pub bau_acta_nac: Option<i32>,
+    pub bau_nota: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, FromRow)]
+pub struct BautizadoAdd {
+    pub bau_nombres: String,
+    pub bau_apellidos: String,
+    pub bau_cedula: String,
+    pub bau_fecha_nac: String,
+    pub bau_lugar_nac: String,
+    pub bau_min_bau: i32,
+    pub bau_padre: Option<String>,
+    pub bau_madre: Option<String>,
+    pub bau_padrinos: String,
+    pub bau_min_cert: i32,
+    pub bau_fecha_bau: String,
+    pub bau_tomo: Option<i32>,
+    pub bau_pag: Option<i32>,
+    pub bau_num: Option<i32>,
+    pub bau_tomo_nac: Option<i32>,
+    pub bau_pag_nac: Option<i32>,
+    pub bau_acta_nac: Option<i32>,
+    pub bau_nota: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, FromRow)]
+pub struct BautizadoMod {
+    pub bau_id: i32,
+    pub bau_nombres: String,
+    pub bau_apellidos: String,
+    pub bau_cedula: String,
+    pub bau_fecha_nac: String,
+    pub bau_lugar_nac: String,
+    pub bau_min_bau: i32,
+    pub bau_padre: Option<String>,
+    pub bau_madre: Option<String>,
+    pub bau_padrinos: String,
+    pub bau_min_cert: i32,
+    pub bau_fecha_bau: String,
+    pub bau_tomo: Option<i32>,
+    pub bau_pag: Option<i32>,
+    pub bau_num: Option<i32>,
+    pub bau_tomo_nac: Option<i32>,
+    pub bau_pag_nac: Option<i32>,
+    pub bau_acta_nac: Option<i32>,
+    pub bau_nota: Option<String>,
+}
