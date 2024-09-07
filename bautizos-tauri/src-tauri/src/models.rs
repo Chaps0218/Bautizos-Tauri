@@ -70,12 +70,10 @@ pub struct Bautizado {
     pub bau_fecha_nac: String,
     pub bau_lugar_nac: String,
     pub bau_min_bau: i32,
-    pub bau_minbau_nombre: String,
     pub bau_padre: Option<String>,
     pub bau_madre: Option<String>,
     pub bau_padrinos: String,
     pub bau_min_cert: i32,
-    pub bau_mincert_nombre: String,
     pub bau_fecha_bau: String,
     pub bau_tomo: Option<i32>,
     pub bau_pag: Option<i32>,
@@ -84,6 +82,8 @@ pub struct Bautizado {
     pub bau_pag_nac: Option<i32>,
     pub bau_acta_nac: Option<i32>,
     pub bau_nota: Option<String>,
+    pub bau_minbau_nombre: String,
+    pub bau_mincert_nombre: String,
 }
 
 #[derive(Serialize, Deserialize, FromRow)]

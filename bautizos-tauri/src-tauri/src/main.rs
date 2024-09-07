@@ -267,10 +267,82 @@ async fn flush_min_actual() -> Result<String, String> {
 async fn get_all_bautizados() -> Result<Vec<Bautizado>, String> {
     let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
     let bautizados: Vec<Bautizado> = conn
-        .query("select bau.*, ma.min_nombre as bau_min_nombre, mb.min_nombre as bau_mincert_nombre from bautizado as bau inner join ministro as ma on bau.bau_min_bau = ma.min_id inner join ministro as mb on bau.bau_min_cert = mb.min_id")
+        .query("select bau.*, ma.min_nombre as bau_minbau_nombre, mb.min_nombre as bau_mincert_nombre from bautizado as bau inner join ministro as ma on bau.bau_min_bau = ma.min_id inner join ministro as mb on bau.bau_min_cert = mb.min_id")
         .map_err(|e| e.to_string())?;
 
     Ok(bautizados)
+}
+
+#[tauri::command]
+async fn handle_add_bautizado(input: BautizadoAdd) -> Result<String, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let insert_query = r#"
+        INSERT INTO bautizado (bau_nombres, bau_apellidos, bau_cedula, bau_fecha_nac, bau_lugar_nac, bau_min_bau, bau_padre, bau_madre, bau_padrinos, bau_min_cert, bau_fecha_bau, bau_tomo, bau_pag, bau_num, bau_tomo_nac, bau_pag_nac, bau_acta_nac, bau_nota)
+        VALUES (:bau_nombres, :bau_apellidos, :bau_cedula, :bau_fecha_nac, :bau_lugar_nac, :bau_min_bau, :bau_padre, :bau_madre, :bau_padrinos, :bau_min_cert, :bau_fecha_bau, :bau_tomo, :bau_pag, :bau_num, :bau_tomo_nac, :bau_pag_nac, :bau_acta_nac, :bau_nota)
+    "#;
+
+    conn.exec_drop(
+        insert_query,
+        params! {
+            "bau_nombres" => &input.bau_nombres,
+            "bau_apellidos" => &input.bau_apellidos,
+            "bau_cedula" => &input.bau_cedula,
+            "bau_fecha_nac" => &input.bau_fecha_nac,
+            "bau_lugar_nac" => &input.bau_lugar_nac,
+            "bau_min_bau" => &input.bau_min_bau,
+            "bau_padre" => &input.bau_padre,
+            "bau_madre" => &input.bau_madre,
+            "bau_padrinos" => &input.bau_padrinos,
+            "bau_min_cert" => &input.bau_min_cert,
+            "bau_fecha_bau" => &input.bau_fecha_bau,
+            "bau_tomo" => &input.bau_tomo,
+            "bau_pag" => &input.bau_pag,
+            "bau_num" => &input.bau_num,
+            "bau_tomo_nac" => &input.bau_tomo_nac,
+            "bau_pag_nac" => &input.bau_pag_nac,
+            "bau_acta_nac" => &input.bau_acta_nac,
+            "bau_nota" => &input.bau_nota,
+        },
+    )
+    .map_err(|e| e.to_string())?;
+
+    Ok("Bautizado añadido".to_string())
+}
+
+#[tauri::command]
+async fn handle_modify_bautizado(input: BautizadoMod) -> Result<String, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let modify_query = r#"
+        UPDATE bautizado SET bau_nombres = :bau_nombres, bau_apellidos = :bau_apellidos, bau_cedula = :bau_cedula, bau_fecha_nac = :bau_fecha_nac, bau_lugar_nac = :bau_lugar_nac, bau_min_bau = :bau_min_bau, bau_padre = :bau_padre, bau_madre = :bau_madre, bau_padrinos = :bau_padrinos, bau_min_cert = :bau_min_cert, bau_fecha_bau = :bau_fecha_bau, bau_tomo = :bau_tomo, bau_pag = :bau_pag, bau_num = :bau_num, bau_tomo_nac = :bau_tomo_nac, bau_pag_nac = :bau_pag_nac, bau_acta_nac = :bau_acta_nac, bau_nota = :bau_nota WHERE bau_id = :bau_id
+    "#;
+
+    conn.exec_drop(
+        modify_query,
+        params! {
+            "bau_id" => &input.bau_id,
+            "bau_nombres" => &input.bau_nombres,
+            "bau_apellidos" => &input.bau_apellidos,
+            "bau_cedula" => &input.bau_cedula,
+            "bau_fecha_nac" => &input.bau_fecha_nac,
+            "bau_lugar_nac" => &input.bau_lugar_nac,
+            "bau_min_bau" => &input.bau_min_bau,
+            "bau_padre" => &input.bau_padre,
+            "bau_madre" => &input.bau_madre,
+            "bau_padrinos" => &input.bau_padrinos,
+            "bau_min_cert" => &input.bau_min_cert,
+            "bau_fecha_bau" => &input.bau_fecha_bau,
+            "bau_tomo" => &input.bau_tomo,
+            "bau_pag" => &input.bau_pag,
+            "bau_num" => &input.bau_num,
+            "bau_tomo_nac" => &input.bau_tomo_nac,
+            "bau_pag_nac" => &input.bau_pag_nac,
+            "bau_acta_nac" => &input.bau_acta_nac,
+            "bau_nota" => &input.bau_nota,
+        },
+    )
+    .map_err(|e| e.to_string())?;
+
+    Ok("Bautizado modificado".to_string())
 }
 
 fn main() {
@@ -293,7 +365,9 @@ fn main() {
             handle_modify_ministro,
             flush_min_actual,
             open_file,
-            get_all_bautizados
+            get_all_bautizados,
+            handle_add_bautizado,
+            handle_modify_bautizado
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

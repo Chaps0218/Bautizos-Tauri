@@ -57,10 +57,6 @@ function Perfil() {
                             <strong>Rol:</strong>
                             <div>{user.usu_rol}</div>
                         </div>
-                        <div className='gridCentraoNoFull grid-2colum-equal-lessSpace perfilFontSize'>
-                            <strong>Establecimiento:</strong>
-                            <div>{user.est_nombre}</div>
-                        </div>
                     </div>
                 </div>
                 <div className='gridCentrao grid-2row-topPerfil perfilFontSize'>
@@ -70,7 +66,7 @@ function Perfil() {
                     <div className='gridCentraoNoFull grid-2row-equal-lessSpace perfilFontSize'>
                         <div className='gridCentraoNoFull grid-2colum-equal-lessSpace perfilFontSize'>
                             <strong>Usuario:</strong>
-                            <div>{user.usu_user}</div>
+                            <div>{user.usu_username}</div>
                         </div>
                         <div className='gridCentraoNoFull grid-2colum-equal-lessSpace perfilFontSize'>
                             <strong>Contraseña:</strong>

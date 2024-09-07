@@ -8,7 +8,7 @@ import Inicio from './components/Inicio';
 import Ministro from './components/Ministro';
 import Usuarios from './components/Usuarios';
 import Perfil from './components/Perfil';
-import Confirmaciones from './components/Bautizados';
+import Bautizos from './components/Bautizados';
 import './App.css';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={loggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
             <Route path="/home" element={loggedIn ? <Inicio /> : <Navigate to="/" />} />
-            <Route path="/bautizados" element={loggedIn ? <Confirmaciones /> : <Navigate to="/" />} />
+            <Route path="/bautizados" element={loggedIn ? <Bautizos /> : <Navigate to="/" />} />
             <Route path="/ministros" element={loggedIn ? <Ministro /> : <Navigate to="/" />} />
             <Route path="/usuarios" element={loggedIn ? <Usuarios /> : <Navigate to="/" />} />
             <Route path="/perfil" element={loggedIn ? <Perfil /> : <Navigate to="/" />} />

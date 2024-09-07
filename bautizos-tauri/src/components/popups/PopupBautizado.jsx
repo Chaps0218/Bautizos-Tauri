@@ -19,50 +19,40 @@ import CardContent from '@mui/material/CardContent';
 import './popup.css';
 import '../../App.css';
 
-const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
+const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
     const { user } = useUser();
     const now = dayjs().locale('es');
     const [formData, setFormData] = useState({
-        conf_nombres: '',
-        usu_id: user.usu_id,
-        min_id: 1,
-        est_id: 1,
-        conf_apellidos: '',
-        conf_fecha: now.format('YYYY-MM-DD'),
-        conf_tomo: '',
-        conf_pagina: '',
-        conf_numero: '',
-        conf_padre_nombre: '',
-        conf_madre_nombre: '',
-        conf_padrino1_nombre: '',
-        conf_padrino1_apellido: '',
-        conf_padrino2_nombre: '',
-        conf_padrino2_apellido: '',
-        conf_num_confirmacion: '',
-        conf_bau_ciudad: '',
-        conf_bau_parroquia: '',
-        conf_bau_fecha: '',
-        conf_bau_tomo: 0,
-        conf_bau_pagina: 0,
-        conf_bau_numero: 0,
-        conf_bau_info: 0,
+        bau_nombres: '',
+        bau_apellidos: '',
+        bau_cedula: '',
+        bau_fecha_nac: now.format('YYYY-MM-DD'),
+        bau_lugar_nac: '',
+        bau_min_bau: 0,
+        bau_padre: '',
+        bau_madre: '',
+        bau_padrinos: '',
+        bau_min_cert: 0,
+        bau_fecha_bau: now.format('YYYY-MM-DD'),
+        bau_tomo: 0,
+        bau_pag: 0,
+        bau_num: 0,
+        bau_tomo_nac: 0,
+        bau_pag_nac: 0,
+        bau_acta_nac: 0,
+        bau_nota: '',
     });
     const [errors, setErrors] = useState({});
-    const [establecimientos, setEstablecimientos] = useState([]);
     const [ministros, setMinistros] = useState([]);
+    const [ministrosParrocos, setMinistrosParrocos] = useState([]);
 
     useEffect(() => {
-        const fetchEstablecimientos = async () => {
-            const response = await invoke('get_all_establecimientos');
-            setEstablecimientos(response);
-        };
-
         const fetchMinistros = async () => {
             const response = await invoke('get_all_ministros');
+            setMinistrosParrocos(response.filter((ministro) => ministro.min_b_parroco === 1));
             setMinistros(response);
         };
 
-        fetchEstablecimientos();
         fetchMinistros();
     }, []);
 
@@ -73,29 +63,24 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
             });
         } else {
             setFormData({
-                conf_nombres: '',
-                usu_id: user.usu_id,
-                min_id: 1,
-                est_id: 1,
-                conf_apellidos: '',
-                conf_fecha: now.format('YYYY-MM-DD'),
-                conf_tomo: '',
-                conf_pagina: '',
-                conf_numero: '',
-                conf_padre_nombre: '',
-                conf_madre_nombre: '',
-                conf_padrino1_nombre: '',
-                conf_padrino1_apellido: '',
-                conf_padrino2_nombre: '',
-                conf_padrino2_apellido: '',
-                conf_num_confirmacion: '',
-                conf_bau_ciudad: '',
-                conf_bau_parroquia: '',
-                conf_bau_fecha: '',
-                conf_bau_tomo: 0,
-                conf_bau_pagina: 0,
-                conf_bau_numero: 0,
-                conf_bau_info: 0,
+                bau_nombres: '',
+                bau_apellidos: '',
+                bau_cedula: '',
+                bau_fecha_nac: now.format('YYYY-MM-DD'),
+                bau_lugar_nac: '',
+                bau_min_bau: 0,
+                bau_padre: '',
+                bau_madre: '',
+                bau_padrinos: '',
+                bau_min_cert: 0,
+                bau_fecha_bau: now.format('YYYY-MM-DD'),
+                bau_tomo: 0,
+                bau_pag: 0,
+                bau_num: 0,
+                bau_tomo_nac: 0,
+                bau_pag_nac: 0,
+                bau_acta_nac: 0,
+                bau_nota: '',
             });
         }
     }, [initialData, isOpen]);
@@ -103,29 +88,24 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
     useEffect(() => {
         if (!isOpen) {
             setFormData({
-                conf_nombres: '',
-                usu_id: user.usu_id,
-                min_id: 1,
-                est_id: 1,
-                conf_apellidos: '',
-                conf_fecha: now.format('YYYY-MM-DD'),
-                conf_tomo: '',
-                conf_pagina: '',
-                conf_numero: '',
-                conf_padre_nombre: '',
-                conf_madre_nombre: '',
-                conf_padrino1_nombre: '',
-                conf_padrino1_apellido: '',
-                conf_padrino2_nombre: '',
-                conf_padrino2_apellido: '',
-                conf_num_confirmacion: '',
-                conf_bau_ciudad: '',
-                conf_bau_parroquia: '',
-                conf_bau_fecha: '',
-                conf_bau_tomo: 0,
-                conf_bau_pagina: 0,
-                conf_bau_numero: 0,
-                conf_bau_info: 0,
+                bau_nombres: '',
+                bau_apellidos: '',
+                bau_cedula: '',
+                bau_fecha_nac: now.format('YYYY-MM-DD'),
+                bau_lugar_nac: '',
+                bau_min_bau: 0,
+                bau_padre: '',
+                bau_madre: '',
+                bau_padrinos: '',
+                bau_min_cert: 0,
+                bau_fecha_bau: now.format('YYYY-MM-DD'),
+                bau_tomo: 0,
+                bau_pag: 0,
+                bau_num: 0,
+                bau_tomo_nac: 0,
+                bau_pag_nac: 0,
+                bau_acta_nac: 0,
+                bau_nota: '',
             });
             setErrors({});
         }
@@ -139,11 +119,11 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
         }));
     };
 
-    const handleDateChange = (date) => {
-        setFormData({ ...formData, conf_fecha: date.format('YYYY-MM-DD') });
+    const handleDateNacChange = (date) => {
+        setFormData({ ...formData, bau_fecha_nac: date.format('YYYY-MM-DD') });
     };
     const handleDateBauChange = (date) => {
-        setFormData({ ...formData, conf_bau_fecha: date.format('YYYY-MM-DD') });
+        setFormData({ ...formData, bau_fecha_bau: date.format('YYYY-MM-DD') });
     };
 
     const handleBlur = (e) => {
@@ -157,16 +137,16 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
 
     const handleAutocompleteChange = (event, value, field) => {
         switch (field) {
-            case "min_id":
+            case "bau_min_bau":
                 setFormData((prevFormData) => ({
                     ...prevFormData,
-                    [field]: value ? value.min_id : null,
+                    bau_min_bau: value ? value.min_id : null,
                 }));
                 break;
-            case "est_id":
+            case "bau_min_cert":
                 setFormData((prevFormData) => ({
                     ...prevFormData,
-                    [field]: value ? value.est_id : null,
+                    bau_min_cert: value ? value.min_id : null,
                 }));
                 break;
         }
@@ -174,44 +154,41 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
 
     const validateForm = () => {
         const newErrors = {};
-        if (!formData.conf_nombres) newErrors.conf_nombres = true;
-        if (!formData.conf_apellidos) newErrors.conf_apellidos = true;
-        if (!formData.conf_padre_nombre) newErrors.conf_padre_nombre = true;
-        if (!formData.conf_madre_nombre) newErrors.conf_madre_nombre = true;
-        if (!formData.conf_padrino1_nombre) newErrors.conf_padrino1_nombre = true;
-        if (!formData.conf_padrino1_apellido) newErrors.conf_padrino1_apellido = true;
-        if (!formData.est_id) newErrors.est_id = true;
-        if (!formData.min_id) newErrors.min_id = true;
-        if (!formData.conf_tomo) newErrors.conf_tomo = true;
-        if (!formData.conf_pagina) newErrors.conf_pagina = true;
-        if (!formData.conf_numero) newErrors.conf_numero = true;
-        if (!formData.conf_num_confirmacion) newErrors.conf_num_confirmacion = true;
+        if (!formData.bau_nombres) newErrors.bau_nombres = true;
+        if (!formData.bau_apellidos) newErrors.bau_apellidos = true;
+        if (!formData.bau_cedula) newErrors.bau_cedula = true;
+        if (formData.bau_cedula.length != 10) newErrors.bau_cedula_length = true;
+        if (!formData.bau_fecha_nac) newErrors.bau_fecha_nac = true;
+        if (!formData.bau_lugar_nac) newErrors.bau_lugar_nac = true;
+        if (!formData.bau_min_bau) newErrors.bau_min_bau = true;
+        if (!formData.bau_padre) newErrors.bau_padre = true;
+        if (!formData.bau_madre) newErrors.bau_madre = true;
+        if (!formData.bau_padrinos) newErrors.bau_padrinos = true;
+        if (!formData.bau_min_cert) newErrors.bau_min_cert = true;
+        if (!formData.bau_fecha_bau) newErrors.bau_fecha_bau = true;
+        if (!formData.bau_tomo) newErrors.bau_tomo = true;
+        if (!formData.bau_pag) newErrors.bau_pag = true;
+        if (!formData.bau_num) newErrors.bau_num = true;
+        if (!formData.bau_tomo_nac) newErrors.bau_tomo_nac = true;
+        if (!formData.bau_pag_nac) newErrors.bau_pag_nac = true;
+        if (!formData.bau_acta_nac) newErrors.bau_acta_nac = true;
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = () => {
+        console.log("antes de validar");
         if (validateForm()) {
-            formData.conf_tomo = Number(formData.conf_tomo);
-            formData.conf_pagina = Number(formData.conf_pagina);
-            formData.conf_numero = Number(formData.conf_numero);
-            formData.conf_num_confirmacion = Number(formData.conf_num_confirmacion);
-            formData.conf_bau_tomo = Number(formData.conf_bau_tomo);
-            formData.conf_bau_pagina = Number(formData.conf_bau_pagina);
-            formData.conf_bau_numero = Number(formData.conf_bau_numero);
-            formData.conf_bau_info = Number(formData.conf_bau_info);
-            if (
-                (formData.conf_bau_fecha !== '' && formData.conf_bau_fecha !== null) &&
-                formData.conf_bau_tomo !== 0 &&
-                formData.conf_bau_pagina !== 0 &&
-                formData.conf_bau_numero !== 0 &&
-                (formData.conf_bau_ciudad !== '' && formData.conf_bau_ciudad !== null) &&
-                (formData.conf_bau_parroquia !== '' && formData.conf_bau_parroquia !== null)
-            ) {
-                formData.conf_bau_info = 1;
-            } else {
-                formData.conf_bau_info = 0;
-            }
+            formData.bau_tomo = Number(formData.bau_tomo);
+            formData.bau_pag = Number(formData.bau_pag);
+            formData.bau_num = Number(formData.bau_num);
+            formData.bau_tomo_nac = Number(formData.bau_tomo_nac);
+            formData.bau_pag_nac = Number(formData.bau_pag_nac);
+            formData.bau_acta_nac = Number(formData.bau_acta_nac);
+            formData.bau_min_bau = Number(formData.bau_min_bau);
+            formData.bau_min_cert = Number(formData.bau_min_cert);
+
+            console.log(formData);
             onSave(formData);
         }
     };
@@ -239,184 +216,156 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
             <div className="popup-content">
                 <div className='gridCentrao grid-3row-center'>
                     <div className='gridCentrao'>
-                        <h2>{initialData ? 'Editar Confirmado' : 'Agregar Confirmado'}</h2>
+                        <h2>{initialData ? 'Editar Bautizado' : 'Agregar Bautizado'}</h2>
                     </div>
                     <div className='gridTop cartas grid-2colum-noequal'>
                         <Card sx={{ minWidth: 275 }}>
                             <CardContent>
                                 <div className="gridCentraoNoFull2 form">
-                                    <h2>Datos Confirmación</h2>
-                                    <div className='gridCentraoNoFull grid-2colum-equal'>
+                                    <h2>Datos de Bautizo</h2>
+                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
                                         <TextField
                                             fullWidth
-                                            label="Cédula de Confirmación"
-                                            type="number"
-                                            name="conf_num_confirmacion"
-                                            defaultValue="Small"
+                                            label="Nombres del Bautizado"
+                                            name="bau_nombres"
                                             size="small"
                                             onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            value={formData.conf_num_confirmacion}
-                                            error={errors.conf_num_confirmacion}
-                                            helperText={errors.conf_num_confirmacion ? 'Debe ser un número entero positivo' : ''}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
+                                            onBlur={handleChange}
+                                            value={formData.bau_nombres}
+                                            error={errors.bau_nombres}
+                                            helperText={errors.bau_nombres ? 'Campo obligatorio' : ''}
+                                            autoComplete='one-time-code'
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            label="Apellidos del Bautizado"
+                                            name="bau_apellidos"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_apellidos}
+                                            error={errors.bau_apellidos}
+                                            helperText={errors.bau_apellidos ? 'Campo obligatorio' : ''}
+                                            autoComplete='one-time-code'
+                                        />
+                                    </div>
+                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Padre del Bautizado"
+                                            name="bau_padre"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_padre}
+                                            error={errors.bau_padre}
+                                            helperText={errors.bau_padre ? 'Campo obligatorio' : ''}
+                                            autoComplete='one-time-code'
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            label="Madre del Bautizado"
+                                            name="bau_madre"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_madre}
+                                            error={errors.bau_madre}
+                                            helperText={errors.bau_madre ? 'Campo obligatorio' : ''}
+                                            autoComplete='one-time-code'
+                                        />
+                                    </div>
+                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Padrinos del Bautizado"
+                                            name="bau_padrinos"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_padrinos}
+                                            error={errors.bau_padrinos}
+                                            helperText={errors.bau_padrinos ? 'Campo obligatorio' : ''}
                                             autoComplete='one-time-code'
                                         />
                                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                                             <DatePicker
-                                                label="Fecha de Confirmación"
-                                                value={dayjs(formData.conf_fecha).locale('es')}
-                                                onChange={handleDateChange}
+                                                label="Fecha de Bautizo"
+                                                value={dayjs(formData.bau_fecha_bau).locale('es')}
+                                                onChange={handleDateBauChange}
                                                 textField={(params) => <TextField {...params} />}
                                             />
                                         </LocalizationProvider>
-                                    </div>
-                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
-                                        <TextField
-                                            fullWidth
-                                            label="Nombres del Confirmado"
-                                            name="conf_nombres"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_nombres}
-                                            error={errors.conf_nombres}
-                                            helperText={errors.conf_nombres ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
-                                        <TextField
-                                            fullWidth
-                                            label="Apellidos del Confirmado"
-                                            name="conf_apellidos"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_apellidos}
-                                            error={errors.conf_apellidos}
-                                            helperText={errors.conf_apellidos ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
-                                    </div>
-                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
-                                        <TextField
-                                            fullWidth
-                                            label="Padre del Confirmado"
-                                            name="conf_padre_nombre"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_padre_nombre}
-                                            error={errors.conf_padre_nombre}
-                                            helperText={errors.conf_padre_nombre ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
-                                        <TextField
-                                            fullWidth
-                                            label="Madre del Confirmado"
-                                            name="conf_madre_nombre"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_madre_nombre}
-                                            error={errors.conf_madre_nombre}
-                                            helperText={errors.conf_madre_nombre ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
-                                    </div>
-                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
-                                        <TextField
-                                            fullWidth
-                                            label="Nombres Padrino/Madrina"
-                                            name="conf_padrino1_nombre"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_padrino1_nombre}
-                                            error={errors.conf_padrino1_nombre}
-                                            helperText={errors.conf_padrino1_nombre ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
-                                        <TextField
-                                            fullWidth
-                                            label="Apellidos Padrino/Madrina"
-                                            name="conf_padrino1_apellido"
-                                            defaultValue="Small"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.conf_padrino1_apellido}
-                                            error={errors.conf_padrino1_apellido}
-                                            helperText={errors.conf_padrino1_apellido ? 'Campo obligatorio' : ''}
-                                            autoComplete='one-time-code'
-                                        />
                                     </div>
                                     <div className='gridCentraoNoFull grid-2colum-equal  input-separado'>
                                         <Autocomplete
                                             fullWidth
                                             options={ministros}
-                                            defaultValue="Small"
                                             size="small"
                                             getOptionLabel={(option) => option.min_nombre}
-                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'min_id')}
-                                            value={ministros.find((ministro) => ministro.min_id === formData.min_id) || null}
-                                            renderInput={(params) => <TextField {...params} label="Ministro" />}
+                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'bau_min_bau')}
+                                            value={ministros.find((ministro) => ministro.min_id === formData.bau_min_bau) || null}
+                                            renderInput={(params) => <TextField {...params} label="Ministro de Bautizo" />}
                                         />
                                         <Autocomplete
                                             fullWidth
-                                            options={establecimientos}
-                                            defaultValue="Small"
+                                            options={ministrosParrocos}
                                             size="small"
-                                            getOptionLabel={(option) => option.est_nombre}
-                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'est_id')}
-                                            value={establecimientos.find((est) => est.est_id === formData.est_id) || null}
-                                            renderInput={(params) => <TextField {...params} label="Establecimiento" />}
+                                            getOptionLabel={(option) => option.min_nombre}
+                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'bau_min_cert')}
+                                            value={ministros.find((ministro) => ministro.min_id === formData.bau_min_cert) || null}
+                                            renderInput={(params) => <TextField {...params} label="Ministro Certifica" />}
+                                        />
+                                    </div>
+                                    <div className='gridCentraoNoFull input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Notas"
+                                            name="bau_nota"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_nota}
+                                            autoComplete='one-time-code'
                                         />
                                     </div>
                                     <div className='gridCentraoNoFull grid-3colum-equal input-separado'>
                                         <TextField
                                             fullWidth
                                             label="Tomo"
-                                            name="conf_tomo"
-                                            defaultValue="Small"
+                                            name="bau_tomo"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_tomo}
-                                            error={errors.conf_tomo}
-                                            helperText={errors.conf_tomo ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_tomo}
+                                            error={errors.bau_tomo}
+                                            helperText={errors.bau_tomo ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                         <TextField
                                             fullWidth
                                             label="Página"
-                                            name="conf_pagina"
-                                            defaultValue="Small"
+                                            name="bau_pag"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_pagina}
-                                            error={errors.conf_pagina}
-                                            helperText={errors.conf_pagina ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_pag}
+                                            error={errors.bau_pag}
+                                            helperText={errors.bau_pag ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                         <TextField
                                             fullWidth
                                             label="Número"
-                                            name="conf_numero"
-                                            defaultValue="Small"
+                                            name="bau_num"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_numero}
-                                            error={errors.conf_numero}
-                                            helperText={errors.conf_numero ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_num}
+                                            error={errors.bau_num}
+                                            helperText={errors.bau_num ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                     </div>
@@ -427,95 +376,95 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
                         <Card sx={{ minWidth: 275 }}>
                             <CardContent>
                                 <div className="gridCentraoNoFull2">
-                                    <h2>Datos Bautizo</h2>
+                                    <h2>Datos Registro Civil</h2>
                                 </div>
                                 <div >
                                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                                         <DatePicker
-                                            label="Fecha de Bautizo"
-                                            value={dayjs(formData.conf_bau_fecha).locale('es')}
-                                            onChange={handleDateBauChange}
+                                            label="Fecha de Nacimiento"
+                                            value={dayjs(formData.bau_fecha_nac).locale('es')}
+                                            onChange={handleDateNacChange}
                                             textField={(params) => <TextField {...params} />}
                                         />
                                     </LocalizationProvider>
+
+                                    <div className='input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Cédula del Bautizado"
+                                            name="bau_cedula"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_cedula}
+                                            error={errors.bau_cedula}
+                                            helperText={
+                                                errors.bau_cedula
+                                                    ? 'Campo obligatorio'
+                                                    : errors.bau_cedula_length
+                                                        ? 'La cédula debe ser exactamente 10 caracteres'
+                                                        : ''
+                                            }
+                                            autoComplete='one-time-code'
+                                        />
+                                    </div>
+
+                                    <div className='input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Lugar de Nacimiento"
+                                            name="bau_lugar_nac"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_lugar_nac}
+                                            error={errors.bau_lugar_nac}
+                                            helperText={errors.bau_lugar_nac ? 'Campo obligatorio' : ''}
+                                            autoComplete='one-time-code'
+                                        />
+                                    </div>
+
                                     <div className='gridCentraoNoFull grid-3colum-equal input-separado'>
                                         <TextField
                                             fullWidth
                                             label="Tomo"
-                                            name="conf_bau_tomo"
-                                            defaultValue="Small"
+                                            name="bau_tomo_nac"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_bau_tomo}
-                                            error={errors.conf_bau_tomo}
-                                            helperText={errors.conf_bau_tomo ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_tomo_nac}
+                                            error={errors.bau_tomo_nac}
+                                            helperText={errors.bau_tomo_nac ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                         <TextField
                                             fullWidth
                                             label="Página"
-                                            name="conf_bau_pagina"
-                                            defaultValue="Small"
+                                            name="bau_pag_nac"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_bau_pagina}
-                                            error={errors.conf_bau_pagina}
-                                            helperText={errors.conf_bau_pagina ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_pag_nac}
+                                            error={errors.bau_pag_nac}
+                                            helperText={errors.bau_pag_nac ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                         <TextField
                                             fullWidth
-                                            label="Número"
-                                            name="conf_bau_numero"
-                                            defaultValue="Small"
+                                            label="Acta"
+                                            name="bau_acta_nac"
                                             size="small"
+                                            type='number'
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={formData.conf_bau_numero}
-                                            error={errors.conf_bau_numero}
-                                            helperText={errors.conf_bau_numero ? 'Debe ser un número entero positivo' : ''}
+                                            value={formData.bau_acta_nac}
+                                            error={errors.bau_acta_nac}
+                                            helperText={errors.bau_acta_nac ? 'Debe ser un número entero positivo' : ''}
                                             autoComplete='one-time-code'
                                         />
                                     </div>
-                                    <div className='input-separado'>
-                                        <TextField
-                                            label="Ciudad de Bautizo"
-                                            name="conf_bau_ciudad"
-                                            defaultValue="Small"
-                                            size="small"
-                                            value={formData.conf_bau_ciudad}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            autoComplete='one-time-code'
-                                        />
-                                    </div>
-                                    <div className='input-separado'>
-                                        <TextField
-                                            label="Parroquia de Bautizo"
-                                            name="conf_bau_parroquia"
-                                            defaultValue="Small"
-                                            size="small"
-                                            value={formData.conf_bau_parroquia}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            autoComplete='one-time-code'
-                                        />
-                                    </div>
-                                    {/* <div className='input-separado'>
-                                        <TextField
-                                            label="Ministro de Bautizo"
-                                            name="min_nombre"
-                                            defaultValue="Small"
-                                            size="small"
-                                            value={formDataBau.min_nombre}
-                                            onChange={handleChange}
-                                            error={errors.min_nombre}
-                                            helperText={errors.min_nombre}
-                                            fullWidth
-                                        />
-                                    </div> */}
                                 </div>
 
                             </CardContent>
@@ -537,4 +486,4 @@ const PopupConfirmado = ({ isOpen, onClose, onSave, initialData }) => {
     );
 };
 
-export default PopupConfirmado;
+export default PopupBautizado;

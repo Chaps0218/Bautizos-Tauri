@@ -296,6 +296,11 @@ form {
   grid-column-gap: 2vw;
 }
 
+.grid-2colum-noequal2 {
+  grid-template-columns: 50% 40%;
+  grid-column-gap: 2vw;
+}
+
 .grid-2row-equal {
   grid-template-rows: 50% 50%;
   grid-row-gap: 2vh;
@@ -419,11 +424,17 @@ form {
   border-top: #302f2f solid 1px;
 }
 
-.main-Conf {
+.main-bau {
   grid-template-rows: 93% 7%;
 }
 
-.grid-header-conf p {
+.grid-header-bau {
+  grid-template-columns: 50% 40% 10%;
+  font-weight: bold;
+}
+
+.grid-header-bau p {
+  font-size: 1.2vmax;
   font-weight: bold;
 }
 

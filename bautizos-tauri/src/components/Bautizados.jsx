@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
-import PopupConfirmado from './popups/PopupBautizado';
+import PopupBautizado from './popups/PopupBautizado';
 import PopupCertificado from './popups/PopupCertificado';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -19,26 +19,14 @@ import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import '../App.css';
 
-function Confirmaciones() {
+function Bautizos() {
   const [bautizados, setBautizados] = useState([]);
   const [filteredbautizados, setFilteredbautizados] = useState([]);
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const [popoverId, setPopoverId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const [isPopupOpenCert, setIsPopupOpenCert] = useState(false);
   const [popupDataCert, setPopupDataCert] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // const handlePopoverOpen = (event, id) => {
-  //   setAnchorEl(event.currentTarget);
-  //   setPopoverId(id);
-  // };
-
-  // const handlePopoverClose = () => {
-  //   setAnchorEl(null);
-  //   setPopoverId(null);
-  // };
 
   const handleOpenPopup = (data = null) => {
     setPopupData(data);
@@ -62,14 +50,14 @@ function Confirmaciones() {
 
   const handleSavePopup = async (data) => {
     try {
-      if (data.conf_id) {
+      if (data.bau_id) {
         console.log(data)
-        await invoke('handle_modify_confirmado', { input: data });
+        await invoke('handle_modify_bautizado', { input: data });
       } else {
-        await invoke('handle_add_confirmado', { input: data });
+        await invoke('handle_add_bautizado', { input: data });
       }
       const updatedbautizados = await invoke('get_all_bautizados');
-      setbautizados(updatedbautizados);
+      setBautizados(updatedbautizados);
       setFilteredbautizados(updatedbautizados);
     } catch (error) {
       console.error(error);
@@ -79,8 +67,8 @@ function Confirmaciones() {
 
   const handleSavePopupCert = async (data) => {
     try {
-      if (data.conf_id) {
-        await invoke('handle_modify_confirmado', { input: data });
+      if (data.bau_id) {
+        await invoke('handle_modify_bautizado', { input: data });
       }
       const updatedbautizados = await invoke('get_all_bautizados');
       setbautizados(updatedbautizados);
@@ -95,7 +83,7 @@ function Confirmaciones() {
   const fetchbautizados = async () => {
     try {
       const bautizados = await invoke('get_all_bautizados');
-      setbautizados(bautizados);
+      setBautizados(bautizados);
       setFilteredbautizados(bautizados);
     } catch (error) {
       console.error(error);
@@ -108,11 +96,10 @@ function Confirmaciones() {
     if (query === '') {
       setFilteredbautizados(bautizados);
     } else {
-      const filtered = bautizados.filter((confirmado) =>
-        confirmado.conf_nombres.toLowerCase().includes(query) ||
-        confirmado.conf_apellidos.toLowerCase().includes(query) ||
-        (confirmado.conf_fecha && confirmado.conf_fecha.toLowerCase().includes(query)) //||
-        //confirmado.conf_num_confirmacion.toLowerCase().includes(query)
+      const filtered = bautizados.filter((bautizado) =>
+        bautizado.bau_nombres.toLowerCase().includes(query) ||
+        bautizado.bau_apellidos.toLowerCase().includes(query) ||
+        (bautizado.bau_fecha_bau && bautizado.bau_fecha_bau.toLowerCase().includes(query))
       );
       setFilteredbautizados(filtered);
     }
@@ -131,9 +118,9 @@ function Confirmaciones() {
   }, []);
 
   return (
-    <div className='gridTop main-Conf'>
+    <div className='gridTop main-bau'>
       <div>
-        <h2>Confirmaciones</h2>
+        <h2>Bautizados</h2>
         <TextField
           variant="outlined"
           fullWidth
@@ -150,8 +137,7 @@ function Confirmaciones() {
           placeholder='Buscar'
 
         />
-        <div className='gridCentrao3 grid-header-conf'>
-          <p>Cédula</p>
+        <div className='gridCentrao3 grid-header-bau'>
           <p>Nombres Apellidos </p>
           <p>Fecha</p>
           <p>Más</p>
@@ -159,62 +145,90 @@ function Confirmaciones() {
         <div className='overflow'>
 
           {filteredbautizados.map((bautizado) => (
-            <Accordion key={bautizado.conf_id}>
+            <Accordion key={bautizado.bau_id}>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <div className='gridCentrao grid-3colum'>
+                <div className='gridCentrao grid-2colum-noequal2'>
                   <div>
-                    {bautizado.conf_num_confirmacion}
+                    {bautizado.bau_nombres} {bautizado.bau_apellidos}
                   </div>
                   <div>
-                    {bautizado.conf_nombres} {bautizado.conf_apellidos}
-                  </div>
-                  <div>
-                    {bautizado.conf_fecha}
+                    {bautizado.bau_fecha_bau}
                   </div>
                 </div>
               </AccordionSummary>
               <AccordionDetails>
                 <div className='gridCentrao2 grid2-colum '>
                   <div className='gridCentrao info '>
-
-                    <div className='gridCentrao2  grid-2colum-datos'>
-                      <strong className=''>Padre: </strong>
+                    <div className='gridCentrao2 grid-2colum-equal'>
                       <div>
-                        {bautizado.conf_padre_nombre}
-                      </div>
-                      <strong className='input-separado-2'>Madre: </strong>
-                      <div className='input-separado-2'>
-                        {bautizado.conf_madre_nombre}
-                      </div>
-                      <strong className='input-separado-2'>Padrino/Madrina: </strong>
-                      <div className='input-separado-2'>
-                        {bautizado.conf_padrino1_nombre} {bautizado.conf_padrino1_apellido}
-                      </div>
-                      {/* <strong>Madrina: </strong>
-                      <div>
-                        {bautizado.conf_padrino2_nombre} {bautizado.conf_padrino2_apellido}
-                      </div> */}
-                      <strong className='input-separado-2'>Ministro:</strong>
-                      <div className='input-separado-2'>
-                        {bautizado.min_nombre}
-                      </div>
-                      <strong className='input-separado-2'>Establecimiento: </strong>
-                      <div className='input-separado-2'>
-                        {bautizado.est_nombre}
-                      </div>
-                    </div>
-                    <div className='gridCentrao2 info-libro'>
-                      <strong className='input-separado-2'>Tomo: </strong>
-                      <strong className='input-separado-2'>Página: </strong>
-                      <strong className='input-separado-2'>Número: </strong>
-                      <div>
-                        {bautizado.conf_tomo}
+                        <strong className=''>Cédula: </strong>
+                        <div>
+                          {bautizado.bau_cedula}
+                        </div>
+                        <strong className=''>Fecha de Nacimiento: </strong>
+                        <div>
+                          {bautizado.bau_fecha_nac}
+                        </div>
+                        <strong className=''>Lugar de Nacimiento: </strong>
+                        <div>
+                          {bautizado.bau_lugar_nac}
+                        </div>
+                        <strong className=''>Padre: </strong>
+                        <div>
+                          {bautizado.bau_padre}
+                        </div>
+                        <strong className='input-separado-2'>Madre: </strong>
+                        <div className='input-separado-2'>
+                          {bautizado.bau_madre}
+                        </div>
                       </div>
                       <div>
-                        {bautizado.conf_pagina}
+                        <strong className='input-separado-2'>Padrinos/Madrinas: </strong>
+                        <div className='input-separado-2'>
+                          {bautizado.bau_padrinos}
+                        </div>
+                        <strong className='input-separado-2'>Ministro de Bautizo:</strong>
+                        <div className='input-separado-2'>
+                          {bautizado.bau_minbau_nombre}
+                        </div>
+                        <strong className='input-separado-2'>Ministro Certifica:</strong>
+                        <div className='input-separado-2'>
+                          {bautizado.bau_mincert_nombre}
+                        </div>
                       </div>
                       <div>
-                        {bautizado.conf_numero}
+                        <strong>Información Local:</strong>
+                        <div className='gridCentrao2 info-libro'>
+                          <strong className='input-separado-2'>Tomo: </strong>
+                          <strong className='input-separado-2'>Página: </strong>
+                          <strong className='input-separado-2'>Número: </strong>
+                          <div>
+                            {bautizado.bau_tomo}
+                          </div>
+                          <div>
+                            {bautizado.bau_pag}
+                          </div>
+                          <div>
+                            {bautizado.bau_num}
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <strong>Información Registro Civil:</strong>
+                        <div className='gridCentrao2 info-libro'>
+                          <strong className='input-separado-2'>Tomo: </strong>
+                          <strong className='input-separado-2'>Página: </strong>
+                          <strong className='input-separado-2'>Acta: </strong>
+                          <div>
+                            {bautizado.bau_tomo_nac}
+                          </div>
+                          <div>
+                            {bautizado.bau_pag_nac}
+                          </div>
+                          <div>
+                            {bautizado.bau_acta_nac}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -238,14 +252,6 @@ function Confirmaciones() {
                         <AssignmentIcon />
                       </IconButton>
                     </Tooltip>
-                    <div className='info-bautizo'>
-                      {confirmado.conf_bau_info === 1 ?
-                        <div className='gridCentrao2 noInfo'>
-                          <div>Información de bautizo completa.</div>
-                        </div> : <div className='gridCentrao2 noInfo'>
-                          <div>Falta información de bautizo.</div>
-                        </div>}
-                    </div>
                   </div>
                 </div>
               </AccordionDetails>
@@ -254,13 +260,13 @@ function Confirmaciones() {
         </div>
       </div>
       <div className='fab-container'>
-        <Tooltip title="Agregar Confirmado">
+        <Tooltip title="Agregar Bautizado">
           <ColorButtonRed color="error" aria-label="add" onClick={() => handleOpenPopup()}>
             <AddIcon />
           </ColorButtonRed >
         </Tooltip>
       </div>
-      <PopupConfirmado
+      <PopupBautizado
         isOpen={isPopupOpen}
         onClose={handleClosePopup}
         onSave={handleSavePopup}
@@ -277,4 +283,4 @@ function Confirmaciones() {
   );
 }
 
-export default Confirmaciones;
+export default Bautizos;

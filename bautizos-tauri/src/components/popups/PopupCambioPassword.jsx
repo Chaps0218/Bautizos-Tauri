@@ -27,9 +27,11 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
     const checkPassword = async () => {
         try {
             const response = await invoke('check_password', { input: formData.password, input2: user.usu_id });
-            setIsPasswordCorrect(response);
+            console.log('response', response);
+            return response;
         } catch (error) {
             console.error(error);
+            return false;
         }
     };
 
@@ -53,20 +55,22 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
         }
     }, [isOpen]);
 
-    const validateForm = () => {
+    const validateForm = async () => {
         const newErrors = {};
         if (!formData.password) {
-            newErrors.password = 'La constraseña anterior es requerida';
+            newErrors.password = 'La contraseña anterior es requerida';
+        } else {
+            const isPasswordCorrect = await checkPassword();
+            if (!isPasswordCorrect) {
+                newErrors.password = "La contraseña ingresada no coincide con la anterior";
+            }
         }
-        checkPassword();
-        if (!isPasswordCorrect) {
-            newErrors.password = "La contraseña ingresada no coincide con la anterior";
-        }
+
         if (!formData.newPassword) {
             newErrors.newPassword = 'La nueva contraseña es requerida';
         }
         if (!formData.confirmPassword) {
-            newErrors.confirmPassword = 'La confirmación de la constraseña es requerida';
+            newErrors.confirmPassword = 'La confirmación de la contraseña es requerida';
         }
 
         if (formData.newPassword !== formData.confirmPassword) {
@@ -80,7 +84,10 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            if (validateForm()) {
+            console.log('user.usu_id', user.usu_id);
+            console.log('formData.newPassword', formData.newPassword);
+            console.log('formData.password', formData.password);
+            if (await validateForm()) {
                 const response = await invoke('handle_save_password', { input: formData.newPassword, input2: user.usu_id });
                 if (response) {
                     onClose();
@@ -129,6 +136,7 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
                             error={!!errors.password}
                             helperText={errors.password}
                             fullWidth
+                            autoComplete='one-time-code'
                         />
                         <TextField
                             label="Contraseña nueva"
@@ -138,6 +146,7 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
                             error={!!errors.newPassword}
                             helperText={errors.newPassword}
                             fullWidth
+                            autoComplete='one-time-code'
                         />
                         <TextField
                             label="Repetir contraseña nueva"
@@ -147,6 +156,7 @@ const PopupCambioPassword = ({ isOpen, onClose }) => {
                             error={!!errors.confirmPassword}
                             helperText={errors.confirmPassword}
                             fullWidth
+                            autoComplete='one-time-code'
                         />
                     </div>
                     <div className="gridCentraoButtons grid-2colum-equal-lessSpace">
