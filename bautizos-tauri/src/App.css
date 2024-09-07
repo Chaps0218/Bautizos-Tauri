@@ -288,7 +288,10 @@ form {
   grid-template-columns: 63% 37%;
   grid-column-gap: 2vw;
 }
-
+.grid-2colum-noequal-2 {
+  grid-template-columns: 30% 70%;
+  grid-column-gap: 2vw;
+}
 .grid-2colum-noequal2 {
   grid-template-columns: 50% 40%;
   grid-column-gap: 2vw;
@@ -373,9 +376,8 @@ form {
 }
 
 .info-libro {
-  grid-template-columns: repeat(3, 35.5%);
+  grid-template-columns: repeat(3, 30%);
   height: auto;
-  padding-left: 2vw;
 }
 
 .info-familiares {
@@ -410,7 +412,6 @@ form {
 
 .grid2-colum {
   grid-template-columns: 80% 20%;
-  height: 38vh;
 }
 
 .border-top {

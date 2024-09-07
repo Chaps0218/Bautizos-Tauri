@@ -157,63 +157,54 @@ function Bautizos() {
                 </div>
               </AccordionSummary>
               <AccordionDetails>
+
                 <div className='gridCentrao2 grid2-colum '>
-                  <div className='gridCentrao info '>
-                    <div className='gridCentrao2 grid-2colum-equal'>
+                  <div className='gridCentrao'>
+                    <div className='gridCentrao2 grid-2colum-noequal-2'>
                       <div>
-                        <strong className=''>Cédula: </strong>
+                        <strong>Cédula: </strong>
+                        <br />
+                        <strong>Padre: </strong>
+                        <br />
+                        <strong >Madre: </strong>
+                        <br />
+                        <strong >Padrino/Madrina: </strong>
+                        <br />
+                        <strong >Ministro de Bautizo:</strong>
+                        <br />
+                        <strong >Ministro Párroco:</strong>
+                        <br />
+                        {/* <strong className=''>Fecha de Nacimiento: </strong>
+                          {bautizado.bau_fecha_nac}
+                        <strong className=''>Lugar de Nacimiento: </strong>
+                          {bautizado.bau_lugar_nac}
+                         */}
+                      </div>
+                      <div>
                         <div>
                           {bautizado.bau_cedula}
                         </div>
-                        <strong className=''>Fecha de Nacimiento: </strong>
-                        <div>
-                          {bautizado.bau_fecha_nac}
-                        </div>
-                        <strong className=''>Lugar de Nacimiento: </strong>
-                        <div>
-                          {bautizado.bau_lugar_nac}
-                        </div>
-                        <strong className=''>Padre: </strong>
                         <div>
                           {bautizado.bau_padre}
                         </div>
-                        <strong className='input-separado-2'>Madre: </strong>
-                        <div className='input-separado-2'>
+                        <div >
                           {bautizado.bau_madre}
                         </div>
-                      </div>
-                      <div>
-                        <strong className='input-separado-2'>Padrinos/Madrinas: </strong>
-                        <div className='input-separado-2'>
+
+                        <div >
                           {bautizado.bau_padrinos}
                         </div>
-                        <strong className='input-separado-2'>Ministro de Bautizo:</strong>
-                        <div className='input-separado-2'>
+
+                        <div >
                           {bautizado.bau_minbau_nombre}
                         </div>
-                        <strong className='input-separado-2'>Ministro Certifica:</strong>
-                        <div className='input-separado-2'>
+
+                        <div >
                           {bautizado.bau_mincert_nombre}
                         </div>
                       </div>
-                      <div>
-                        <strong>Información Local:</strong>
-                        <div className='gridCentrao2 info-libro'>
-                          <strong className='input-separado-2'>Tomo: </strong>
-                          <strong className='input-separado-2'>Página: </strong>
-                          <strong className='input-separado-2'>Número: </strong>
-                          <div>
-                            {bautizado.bau_tomo}
-                          </div>
-                          <div>
-                            {bautizado.bau_pag}
-                          </div>
-                          <div>
-                            {bautizado.bau_num}
-                          </div>
-                        </div>
-                      </div>
-                      <div>
+
+                      {/* <div>
                         <strong>Información Registro Civil:</strong>
                         <div className='gridCentrao2 info-libro'>
                           <strong className='input-separado-2'>Tomo: </strong>
@@ -229,9 +220,12 @@ function Bautizos() {
                             {bautizado.bau_acta_nac}
                           </div>
                         </div>
-                      </div>
+                      </div> */}
+
                     </div>
+
                   </div>
+
                   <div className='acciones'>
                     <Tooltip title="Editar">
                       <IconButton
@@ -252,6 +246,23 @@ function Bautizos() {
                         <AssignmentIcon />
                       </IconButton>
                     </Tooltip>
+                  </div>
+                </div>
+                <div>
+                    <strong>Información Bautizo:</strong>
+                    <div className='gridCentrao2 info-libro'>
+                      <strong className='input-separado-2'>Tomo: </strong>
+                      <strong className='input-separado-2'>Página: </strong>
+                      <strong className='input-separado-2'>Número: </strong>
+                      <div>
+                        {bautizado.bau_tomo}
+                      </div>
+                      <div>
+                        {bautizado.bau_pag}
+                      </div>
+                      <div>
+                        {bautizado.bau_num}
+                      </div>
                   </div>
                 </div>
               </AccordionDetails>
