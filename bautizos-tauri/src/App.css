@@ -36,7 +36,7 @@ body.dark-mode {
 .logo {
   width: 35vw;
   height: 70vh;
-  background-color: #841414;
+  background-color: #08B7B0;
   border-radius: 1.5% 0 0 1.5%;
   display: grid;
   place-items: center;
@@ -118,7 +118,6 @@ body.dark-mode {
 .grid-2col-unido {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* Dos columnas iguales */
   grid-gap: 0
 }
 
@@ -127,29 +126,23 @@ form {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  /* Espacio entre los elementos */
   margin-top: 20px;
-  /* Añade un margen superior */
 }
 
 .input_login {
   color: rgb(99, 12, 12);
-  /* Cambia el color del texto del input a blanco */
 }
 
 .input_login .MuiInputBase-input {
   color: rgb(0, 0, 0);
-  /* Asegura que el color del texto dentro del input sea blanco */
 }
 
 .input_login .MuiInputAdornment-root svg {
   color: rgb(158, 0, 0);
-  /* Cambia el color del icono a blanco */
 }
 
 .input_login .borderColor {
   color: rgb(158, 0, 0);
-  /* Cambia el color del icono a blanco */
 }
 
 .main-content {
@@ -371,7 +364,7 @@ form {
   bottom: 4vh;
   right: 2vw;
   z-index: 1000;
-  color: #4F0404;
+  color: #057470;
 }
 
 .info {
@@ -479,11 +472,11 @@ form {
 }
 
 .light {
-  background-color: #841414;
+  background-color: #08B7B0;
 }
 
 .light .theme-toggle:hover {
-  background-color: #4F0404;
+  background-color: #057470;
   color: #fff;
 }
 
@@ -492,12 +485,12 @@ form {
 }
 
 .light .link:hover {
-  background-color: #4F0404;
+  background-color: #057470;
   color: #fff;
 }
 
 .light .link.active {
-  background-color: #4F0404;
+  background-color: #057470;
 }
 
 .light .linkIcon {
@@ -505,6 +498,6 @@ form {
 }
 
 .CParroco {
-  background-color: #cacaae;
-  border: 2px solid #9b7f6c;
+  background-color: #b7f3f1;
+  border: 2px solid #0d615e;
 }

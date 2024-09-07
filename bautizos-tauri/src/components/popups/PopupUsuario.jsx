@@ -9,7 +9,7 @@ import { useUser } from '../../UserContext';
 import '../../App.css';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { blueGrey } from '@mui/material/colors';
+import { teal } from '@mui/material/colors';
 import { red } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
@@ -122,10 +122,10 @@ const PopupUsuario = ({ isOpen, onClose, onSave, initialData }) => {
     }
 
     const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(blueGrey[900]),
-        backgroundColor: blueGrey[900],
+        color: theme.palette.getContrastText(red[500]),
+        backgroundColor: teal[300],
         '&:hover': {
-            backgroundColor: blueGrey[500],
+            backgroundColor: teal[500],
         },
     }));
 

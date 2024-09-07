@@ -5,7 +5,7 @@ import './popups/popup.css';
 
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { blueGrey } from '@mui/material/colors';
+import { amber } from '@mui/material/colors';
 
 import PopupCambioPassword from './popups/PopupCambioPassword';
 
@@ -22,10 +22,10 @@ function Perfil() {
     }
 
     const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(blueGrey[900]),
-        backgroundColor: blueGrey[900],
+        color: theme.palette.getContrastText(amber[900]),
+        backgroundColor: amber[900],
         '&:hover': {
-            backgroundColor: blueGrey[500],
+            backgroundColor: amber[500],
         },
     }));
 
