@@ -5,6 +5,9 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Button from '@mui/material/Button';
 import '../App.css';
+import { styled } from '@mui/material/styles';
+import { teal } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -15,6 +18,13 @@ function Login() {
     await handleLogin({ usu_username: username, usu_password: password });
   };
 
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: teal[300],
+    '&:hover': {
+      backgroundColor: teal[500],
+    },
+  }));
   return (
     <div className='gridCentrao bg_login'>
 
@@ -34,7 +44,7 @@ function Login() {
                 onChange={(e) => setUsername(e.target.value)}
                 startAdornment={
                   <InputAdornment position="start">
-                    <PersonOutlineOutlinedIcon />
+                    <PersonOutlineOutlinedIcon sx={{ color: teal[300] }} />
                   </InputAdornment>
                 }
               />
@@ -57,10 +67,10 @@ function Login() {
               />
             </FormControl>
             <br></br>
-            <Button variant="contained" color="error" size="medium"
+            <ColorButton
               onClick={onLogin}>
               Iniciar Sesión
-            </Button>
+            </ColorButton>
             {errors.length > 0 && <div className='rojito'>{errors.join(', ')}</div>}
           </form>
         </div>
