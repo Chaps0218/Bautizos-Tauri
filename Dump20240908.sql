@@ -26,28 +26,30 @@ CREATE TABLE `bautizado` (
   `bau_id` int NOT NULL AUTO_INCREMENT,
   `bau_nombres` varchar(150) COLLATE utf8mb3_spanish_ci NOT NULL,
   `bau_apellidos` varchar(150) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `bau_cedula` varchar(10) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `bau_fecha_nac` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `bau_lugar_nac` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
+  `bau_cedula` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
+  `bau_fecha_nac` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
+  `bau_lugar_nac` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
   `bau_min_bau` int NOT NULL,
-  `bau_padre` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `bau_madre` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `bau_padrinos` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `bau_padre` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
+  `bau_madre` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
+  `bau_padrinos` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
   `bau_min_cert` int NOT NULL,
   `bau_fecha_bau` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `bau_tomo` int DEFAULT NULL,
-  `bau_pag` int DEFAULT NULL,
-  `bau_num` int DEFAULT NULL,
-  `bau_tomo_nac` int DEFAULT NULL,
-  `bau_pag_nac` int DEFAULT NULL,
-  `bau_acta_nac` int DEFAULT NULL,
-  `bau_nota` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
+  `bau_tomo` int DEFAULT '0',
+  `bau_pag` int DEFAULT '0',
+  `bau_num` int DEFAULT '0',
+  `bau_fecha_acta` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT '',
+  `bau_anio_acta` int DEFAULT '0',
+  `bau_tomo_nac` int DEFAULT '0',
+  `bau_pag_nac` int DEFAULT '0',
+  `bau_acta_nac` int DEFAULT '0',
+  `bau_nota` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
   PRIMARY KEY (`bau_id`),
   KEY `ministroBautiza_idx` (`bau_min_bau`),
   KEY `ministroCertifica_idx` (`bau_min_cert`),
   CONSTRAINT `ministroBautiza` FOREIGN KEY (`bau_min_bau`) REFERENCES `ministro` (`min_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ministroCertifica` FOREIGN KEY (`bau_min_cert`) REFERENCES `ministro` (`min_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +58,7 @@ CREATE TABLE `bautizado` (
 
 LOCK TABLES `bautizado` WRITE;
 /*!40000 ALTER TABLE `bautizado` DISABLE KEYS */;
-INSERT INTO `bautizado` VALUES (13,'Nombre1 Nombre2','Apellido1 Apellido2','1712420742','2024-07-25','Aquí mismito',25,'Padre Papá','Madre Mamá','Muchos - Tantos - Padrinos',26,'2024-09-06',1,1,1,1,1,1,'No hay notas'),(14,'Nombre App','Apellido App1','1234567890','2024-07-23','Aquí pero App1',26,'Padre App1','Madre App1','Padrinos - Muchos - Tantos - App1',25,'2024-08-02',1,1,1,1,1,1,'');
+INSERT INTO `bautizado` VALUES (13,'Nombre1 Nombre2','Apellido1 Apellido2','1712420742','2024-07-25','Aquí mismito',25,'Padre Papá','Madre Mamá','Muchos - Tantos - Padrinos',26,'2024-09-06',1,1,1,NULL,NULL,1,1,1,'No hay notas'),(14,'Nombre App','Apellido App1','1234567890','2024-07-23','Aquí pero App1',26,'Padre App1','Madre App1','Padrinos - Muchos - Tantos - App1',25,'2024-08-02',1,1,1,NULL,NULL,1,1,1,''),(15,'SOLO','NECESARIO','','','',26,'','','',25,'2024-09-08',0,0,0,'2024-09-19',0,0,0,0,'');
 /*!40000 ALTER TABLE `bautizado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,4 +125,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-06 22:20:53
+-- Dump completed on 2024-09-08 13:49:27
