@@ -122,35 +122,49 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
 
+        let maxWidth = doc.internal.pageSize.getWidth() - 40;
+
         const lines = [
-            { text: "Certifico que en el Tomo ", style: "normal", endline: false},
+            { text: "Certifico que en el Tomo ", style: "normal", endline: false },
             { text: `${formData.bau_tomo}`, style: "bold", endline: false },
             { text: " Página ", style: "normal", endline: false },
             { text: `${formData.bau_pag}`, style: "bold", endline: false },
             { text: " No. ", style: "normal", endline: false },
             { text: `${formData.bau_num}`, style: "bold", endline: false },
-            { text: " de partidas Bautismales se encuentra inscrita una partida con los siguientes datos:", style: "normal", endline: true },
-            { text: " de partidas Bautismales se encuentra", style: "normal", endline: false },
+            { text: " de partidas Bautismales se encuentra inscrita una partida con los siguientes datos:", style: "normal", endline: false },
+            { text: " PROBANDO DESPUES, mucho despúés, taaanto después", style: "normal", endline: false },
         ];
 
-        let linea;
-        // Ajuste dinámico del texto en el PDF
         lines.forEach(line => {
             const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
-            
-            doc.text(line.text, marginLeft, currentY);
-            marginLeft += doc.getTextWidth(line.text);
-            console.log(marginLeft);
-            if(line.endline){
+
+            let text = line.text;
+            let textWidth = doc.getTextWidth(text);
+
+            if (marginLeft + textWidth > maxWidth) {
+                const splitText = doc.splitTextToSize(text, maxWidth - marginLeft);
+                splitText.forEach((txtLine, index) => {
+                    if (index === 0) {
+                        doc.text(txtLine, marginLeft, currentY);
+                        marginLeft = 20;
+                        currentY += lineHeight;
+                    } else {
+                        doc.text(txtLine, marginLeft, currentY);
+                        marginLeft += doc.getTextWidth(txtLine) + 1;
+                    }
+                });
+            } else {
+                doc.text(text, marginLeft, currentY);
+                marginLeft += textWidth;
+            }
+            if (line.endline) {
                 marginLeft = 20;
                 currentY += lineHeight;
             }
-            
         });
 
-        // Guardar el archivo PDF
         const pdfBytes = doc.output('arraybuffer');
         const fileName = `certificado_bautismo_${formData.bau_nombres}_${formData.bau_apellidos}_${now.format("YYYY-MM-DD_HH_mm_ss")}.pdf`;
         const dirPath = await documentDir();
