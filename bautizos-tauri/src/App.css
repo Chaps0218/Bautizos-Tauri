@@ -15,7 +15,7 @@ body {
 }
 
 .background {
-  background-image: url('./images/bg_login_bautizo.png');
+  background-image: url('./images/bg_inicio_virgen.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: initial;
@@ -52,7 +52,7 @@ body.dark-mode {
 }
 
 .header-inicio {
-  background-image: url('./images/bg_inicio_ajus.png');
+  background-image: url('./images/bg_login_virgen.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: initial;
@@ -69,14 +69,15 @@ body.dark-mode {
 }
 
 #nombre_inicio {
-  text-align: right;
-  padding-right: 2vw;
-
+  padding-top: 60vh;
+  padding-right: 9vw;
 }
 
 #vicaria_inicio {
   text-align: center;
-  padding: 10%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
 }
 
 .header-inicio h1 {
@@ -173,6 +174,18 @@ form {
   height: auto;
 }
 
+.gridCentrao-top {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: auto;
+  padding-bottom: 20%;
+}
+
+.nombre{
+  display: grid;
+  place-items: left;
+}
 .card-inicio {
   display: grid;
   grid-template-rows: 20% 50%;
@@ -508,7 +521,7 @@ form {
 }
 
 .imgCard img {
-  width: 20vw;
+  width: 18vw;
   height: 20vh;
   border-radius: 8px;
 }
@@ -516,7 +529,7 @@ form {
 
 .longCard {
   height: 100%;
-  width: 20vw;
+  width: 18vw;
 }
 
 .inicioCard {
@@ -525,11 +538,12 @@ form {
 
 .card-interno {
   overflow: auto;
-  height: 18vh;
+  height: 13vh;
   background-color: #0d5f5c;
   text-align: center;
   border-radius: 3vh;
   margin: 1vh 0 1vh 0;
+  justify-content: center;
 }
 
 .card-interno p {
