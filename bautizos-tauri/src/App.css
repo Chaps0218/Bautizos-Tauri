@@ -279,6 +279,11 @@ form {
 .grid-2colum-noequal-2 {
   grid-template-columns: 29% 69%;
   grid-column-gap: 2vw;
+  padding-left: 6vw;
+}
+
+.grid-2colum-noequal-2>* {
+  margin-bottom: 1vh;
 }
 
 .grid-2colum-noequal2 {

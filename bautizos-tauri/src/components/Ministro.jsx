@@ -81,6 +81,11 @@ function Ministro() {
             backgroundColor: amber[900],
         },
     }));
+    const IconButtonBigger = styled(IconButton)(({ theme }) => ({
+        '& svg': {
+            fontSize: '2.5vmax',
+        },
+    }));
 
     return (
         <div className='gridTop main-bau'>
@@ -111,11 +116,11 @@ function Ministro() {
                                 </div>
                                 <div className="ministro-actions">
                                     <Tooltip title="Editar">
-                                        <IconButton onClick={() => handleOpenPopup(ministro)}
+                                        <IconButtonBigger onClick={() => handleOpenPopup(ministro)}
                                             aria-label="edit"
                                             color='success'>
                                             <EditIcon />
-                                        </IconButton>
+                                        </IconButtonBigger>
                                     </Tooltip>
                                 </div>
                             </div>

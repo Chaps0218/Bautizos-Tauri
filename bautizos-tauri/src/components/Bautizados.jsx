@@ -118,6 +118,12 @@ function Bautizos() {
     backgroundColor: 'rgba(0,0,0, 0.05)',
   }));
 
+  const IconButtonBigger = styled(IconButton)(({ theme }) => ({
+    '& svg': {
+      fontSize: '2.7vmax',
+    },
+  }));
+
   useEffect(() => {
     fetchbautizados();
   }, []);
@@ -165,108 +171,60 @@ function Bautizos() {
                   <div className='gridCentrao2 grid2-colum '>
                     <div className='gridCentrao'>
                       <div className='gridCentrao2 grid-2colum-noequal-2'>
+                        <strong>Cédula: </strong>
                         <div>
-                          <strong>Cédula: </strong>
-                          <br />
-                          <strong>Padre: </strong>
-                          <br />
-                          <strong >Madre: </strong>
-                          <br />
-                          <strong >Padrino/Madrina: </strong>
-                          <br />
-                          <strong >Ministro de Bautizo:</strong>
-                          <br />
-                          <strong >Ministro Párroco:</strong>
-                          <br />
-                          {/* <strong className=''>Fecha de Nacimiento: </strong>
-                          {bautizado.bau_fecha_nac}
-                        <strong className=''>Lugar de Nacimiento: </strong>
-                          {bautizado.bau_lugar_nac}
-                         */}
+                          {bautizado.bau_cedula}
                         </div>
+                        <strong>Padre: </strong>
                         <div>
-                          <div>
-                            {bautizado.bau_cedula}
-                          </div>
-                          <div>
-                            {bautizado.bau_padre}
-                          </div>
-                          <div >
-                            {bautizado.bau_madre}
-                          </div>
-
-                          <div >
-                            {bautizado.bau_padrinos}
-                          </div>
-
-                          <div >
-                            {bautizado.bau_minbau_nombre}
-                          </div>
-
-                          <div >
-                            {bautizado.bau_mincert_nombre}
-                          </div>
+                          {bautizado.bau_padre}
                         </div>
-
-                        {/* <div>
-                        <strong>Información Registro Civil:</strong>
-                        <div className='gridCentrao2 info-libro'>
-                          <strong className='input-separado-2'>Tomo: </strong>
-                          <strong className='input-separado-2'>Página: </strong>
-                          <strong className='input-separado-2'>Acta: </strong>
-                          <div>
-                            {bautizado.bau_tomo_nac}
-                          </div>
-                          <div>
-                            {bautizado.bau_pag_nac}
-                          </div>
-                          <div>
-                            {bautizado.bau_acta_nac}
-                          </div>
+                        <strong >Madre: </strong>
+                        <div >
+                          {bautizado.bau_madre}
                         </div>
-                      </div> */}
-
+                        <strong >Padrino/Madrina: </strong>
+                        <div >
+                          {bautizado.bau_padrinos}
+                        </div>
+                        <strong >Ministro de Bautizo:</strong>
+                        <div >
+                          {bautizado.bau_minbau_nombre}
+                        </div>
+                        <strong >Ministro Párroco:</strong>
+                        <div >
+                          {bautizado.bau_mincert_nombre}
+                        </div>
                       </div>
-
+                      <div className='gridCentraoNoFull'>
+                        <strong className='margin-bottom'>Información Bautizo:</strong>
+                        <div className='gridCentrao2 info-libro'>
+                          <div className='input-separado-2'><strong>Tomo:</strong> {bautizado.bau_tomo}</div>
+                          <div className='input-separado-2'><strong>Página:</strong> {bautizado.bau_pag}</div>
+                          <div className='input-separado-2'><strong>Número:</strong> {bautizado.bau_num}</div>
+                        </div>
+                      </div>
                     </div>
 
                     <div className='acciones'>
                       <Tooltip title="Editar">
-                        <IconButton
+                        <IconButtonBigger
                           aria-label="edit"
                           color='success'
-                          fontSize='large'
                           onClick={() => handleOpenPopup(bautizado)}
                         >
                           <EditIcon />
-                        </IconButton>
+                        </IconButtonBigger>
                       </Tooltip>
                       <Tooltip title="Generar Reporte">
-                        <IconButton
+                        <IconButtonBigger
                           aria-label="Report"
                           color="info"
                           onClick={() => handleOpenPopupCert(bautizado)}
                         >
                           <AssignmentIcon />
-                        </IconButton>
+                        </IconButtonBigger>
                       </Tooltip>
-                    </div>
-                  </div>
-                  <div>
-                    <strong>Información Bautizo:</strong>
-                    <div className='gridCentrao2 info-libro'>
-                      <strong className='input-separado-2'>Tomo: </strong>
-                      <strong className='input-separado-2'>Página: </strong>
-                      <strong className='input-separado-2'>Número: </strong>
-                      <div>
-                        {bautizado.bau_tomo}
-                      </div>
-                      <div>
-                        {bautizado.bau_pag}
-                      </div>
-                      <div>
-                        {bautizado.bau_num}
-                      </div>
                     </div>
                   </div>
                 </AccordionDetailsEstilo>

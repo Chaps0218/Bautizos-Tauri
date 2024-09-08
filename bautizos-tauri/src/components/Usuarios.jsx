@@ -80,6 +80,12 @@ function Usuarios() {
         },
     }));
 
+    const IconButtonBigger = styled(IconButton)(({ theme }) => ({
+        '& svg': {
+            fontSize: '2.5vmax',
+        },
+    }));
+
     return (
         <div className='gridTop main-Conf'>
             <div>
@@ -111,11 +117,11 @@ function Usuarios() {
 
                                     <div className="usuario-actions">
                                         <Tooltip title="Editar">
-                                            <IconButton onClick={() => handleOpenPopup(usuario)}
+                                            <IconButtonBigger onClick={() => handleOpenPopup(usuario)}
                                                 aria-label="edit"
                                                 color='success'>
                                                 <EditIcon />
-                                            </IconButton>
+                                            </IconButtonBigger>
                                         </Tooltip>
                                     </div>
                                 </div>
