@@ -182,6 +182,7 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
             formData.bau_acta_nac = Number(formData.bau_acta_nac);
             formData.bau_min_bau = Number(formData.bau_min_bau);
             formData.bau_min_cert = Number(formData.bau_min_cert);
+            formData.bau_anio_acta = Number(formData.bau_anio_acta);
 
             onSave(formData);
         }

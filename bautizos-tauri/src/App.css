@@ -275,7 +275,7 @@ form {
 }
 
 .grid-2colum-equal {
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 49% 49%;
   grid-column-gap: 2vw;
 }
 

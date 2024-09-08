@@ -203,12 +203,9 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
                                 <div>
                                     <p><strong>Fecha de Bautizo:</strong> {formData.bau_fecha_bau}</p>
                                     <div className='gridCentrao2 grid-3colum-equal'>
-                                        <div><strong>Tomo:</strong></div>
-                                        <div><strong>Página:</strong></div>
-                                        <div><strong>Número:</strong></div>
-                                        <div>{formData.bau_tomo}</div>
-                                        <div>{formData.bau_pag}</div>
-                                        <div>{formData.bau_num}</div>
+                                        <div><strong>Tomo:</strong> {formData.bau_tomo}</div>
+                                        <div><strong>Página:</strong> {formData.bau_pag}</div>
+                                        <div><strong>Número:</strong> {formData.bau_num}</div>
                                     </div>
                                     <p><strong>Padre:</strong> {formData.bau_padre}</p>
                                     <p><strong>Madre:</strong> {formData.bau_madre}</p>
@@ -226,15 +223,15 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
                                 <div>
                                     <p><strong>Fecha de Nacimiento:</strong> {formData.bau_fecha_nac}</p>
                                     <div className='gridCentrao2 grid-3colum-equal'>
-                                        <div><strong>Tomo:</strong></div>
-                                        <div><strong>Página:</strong></div>
-                                        <div><strong>Número:</strong></div>
-                                        <div>{formData.bau_tomo_nac}</div>
-                                        <div>{formData.bau_pag_nac}</div>
-                                        <div>{formData.bau_num_nac}</div>
+                                        <div><strong>Tomo:</strong> {formData.bau_tomo_nac}</div>
+                                        <div><strong>Página:</strong> {formData.bau_pag_nac}</div>
+                                        <div><strong>Acta:</strong> {formData.bau_acta_nac}</div>
                                     </div>
                                     <p><strong>Cédula:</strong> {formData.bau_cedula}</p>
-                                    <p><strong>Lugar de nacimiento:</strong> {formData.bau_lugar_nac}</p>
+                                    <p><strong>Lugar de Nacimiento:</strong> {formData.bau_lugar_nac}</p>
+                                    <p><strong>Fecha de Acta:</strong> {formData.bau_fecha_acta}</p>
+                                    <p><strong>Año de Registro:</strong> {formData.bau_anio_acta}</p>
+                                    <p><strong>Nota:</strong> {formData.bau_nota}</p>
                                 </div>
                             </CardContent>
                         </Card>
