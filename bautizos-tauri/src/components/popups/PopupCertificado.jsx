@@ -18,10 +18,7 @@ import { teal } from '@mui/material/colors';
 import { red } from '@mui/material/colors';
 
 function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
-    const { user } = useUser();
     const now = dayjs().locale('es');
-    const [errors, setErrors] = useState({});
-    const [parroquias, setParroquias] = useState([]);
 
     const [formData, setFormData] = useState({
         bau_nombres: '',
@@ -38,6 +35,8 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         bau_tomo: 0,
         bau_pag: 0,
         bau_num: 0,
+        bau_fecha_acta: '',
+        bau_anio_acta: 0,
         bau_tomo_nac: 0,
         bau_pag_nac: 0,
         bau_acta_nac: 0,
@@ -67,6 +66,8 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
                 bau_tomo: 0,
                 bau_pag: 0,
                 bau_num: 0,
+                bau_fecha_acta: '',
+                bau_anio_acta: 0,
                 bau_tomo_nac: 0,
                 bau_pag_nac: 0,
                 bau_acta_nac: 0,
