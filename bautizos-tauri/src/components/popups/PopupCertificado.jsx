@@ -80,6 +80,10 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
 
     async function generatePDF() {
         const doc = new jsPDF();
+        let lineHeight = 8; // Altura de cada línea
+        let marginLeft = 20; // Margen izquierdo
+        let marginTop = 30; // Margen superior
+        let currentY = marginTop; // Posición vertical inicial
 
         let currentParishPriest;
         try {
@@ -99,61 +103,54 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         doc.addFont("/fonts/VerdanaNow.ttf", "verdana", "normal");
         doc.addFont("/fonts/verdana-bold.ttf", "verdana", "bold");
 
+        // Encabezado
         doc.setFont("georgia", "bold");
         doc.setTextColor(35, 46, 114);
         doc.setFontSize(20);
-        doc.text(`CERTIFICADO DE BAUTISMO`, 105, 20, null, null, 'center');
+        doc.text("CERTIFICADO DE BAUTISMO", 105, currentY, { align: "center" });
 
-        const currentDate = new Date().toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-        });
+        // Información general
+        const currentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
+        currentY += lineHeight;
         doc.setFontSize(12);
-        doc.text(`QUITO, ${currentDate.toUpperCase()}`, 105, 30, null, null, 'center');
+        doc.text(`QUITO, ${currentDate}`, 190, currentY, { align: 'right' });
+
+        // Posición inicial para la información del certificado
+        currentY += lineHeight + 5; // Espacio extra entre el título y el contenido
 
         doc.setFont("verdana", "normal");
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
-        doc.text(`Certifico que en el Tomo ${formData.bau_tomo} Página ${formData.bau_pag} No. ${formData.bau_num} de partidas Bautismales se encuentra`, 20, 40);
-        doc.text(`inscrita una partida con los siguientes datos:`, 20, 45);
 
-        let fechaBautizo = dayjs(formData.bau_fecha_bau).locale('es');
-        let fechaBautizoFormatted = fechaBautizo.format('DD [del mes de] MMMM [del año del Señor] YYYY');
-        doc.text(`El ${fechaBautizoFormatted}`, 20, 55);
+        const lines = [
+            { text: "Certifico que en el Tomo ", style: "normal", endline: false},
+            { text: `${formData.bau_tomo}`, style: "bold", endline: false },
+            { text: " Página ", style: "normal", endline: false },
+            { text: `${formData.bau_pag}`, style: "bold", endline: false },
+            { text: " No. ", style: "normal", endline: false },
+            { text: `${formData.bau_num}`, style: "bold", endline: false },
+            { text: " de partidas Bautismales se encuentra inscrita una partida con los siguientes datos:", style: "normal", endline: true },
+            { text: " de partidas Bautismales se encuentra", style: "normal", endline: false },
+        ];
 
-        doc.text(`en (lugar) NUESTRA SEÑORA DE LA MERCED "LA ARCADIA"`, 20, 60);
+        let linea;
+        // Ajuste dinámico del texto en el PDF
+        lines.forEach(line => {
+            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontStyle = line.style === "bold" ? "bold" : "normal";
+            doc.setFont(fontType, fontStyle);
+            
+            doc.text(line.text, marginLeft, currentY);
+            marginLeft += doc.getTextWidth(line.text);
+            console.log(marginLeft);
+            if(line.endline){
+                marginLeft = 20;
+                currentY += lineHeight;
+            }
+            
+        });
 
-        doc.text(`el (ministro) ${formData.bau_minbau_nombre} bautizó`, 20, 65);
-
-        doc.text(`solemnemente a ${formData.bau_nombres} ${formData.bau_apellidos}`, 20, 70);
-
-        let fechaNacimiento = dayjs(formData.bau_fecha_nac).locale('es');
-        let fechaNacimientoFormatted = fechaNacimiento.format('DD [de] MMMM [del] YYYY');
-        doc.text(`nacido/a en ${formData.bau_lugar_nac} el ${fechaNacimientoFormatted}`, 20, 75);
-
-        doc.text(`hijo/a de ${formData.bau_padre}`, 20, 80);
-        doc.text(`y de ${formData.bau_madre}`, 20, 85);
-
-        doc.text(`feligreses de NUESTRA SEÑORA DE LA MERCED "LA ARCADIA"`, 20, 90);
-
-        doc.text(`Fueron padrino (s)/ madrina (s)`, 20, 95);
-        doc.text(`${formData.bau_padrinos}`, 20, 100);
-
-        doc.text(`a quien (es) se advirtió sus obligaciones y parentesco espiritual.`, 20, 105);
-
-        doc.text(`Lo certifica:`, 20, 110);
-        doc.text(`${formData.bau_mincert_nombre}`, 20, 115);
-
-        doc.setFont("verdana", "bold");
-        doc.text(`Son datos fielmente tomados del original.`, 20, 125);
-        doc.text(`Lo Certifico,`, 20, 130);
-
-        doc.setFont("helvetica", "bold");
-        doc.text(`______________________________`, 20, 150);
-        doc.text(`P. ${currentParishPriest.min_nombre}`, 20, 155);
-        doc.text(`PÁRROCO`, 20, 160);
-
+        // Guardar el archivo PDF
         const pdfBytes = doc.output('arraybuffer');
         const fileName = `certificado_bautismo_${formData.bau_nombres}_${formData.bau_apellidos}_${now.format("YYYY-MM-DD_HH_mm_ss")}.pdf`;
         const dirPath = await documentDir();

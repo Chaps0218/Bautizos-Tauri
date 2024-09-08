@@ -70,7 +70,7 @@ function Bautizos() {
         await invoke('handle_modify_bautizado', { input: data });
       }
       const updatedbautizados = await invoke('get_all_bautizados');
-      setbautizados(updatedbautizados);
+      setBautizados(updatedbautizados);
       setFilteredbautizados(updatedbautizados);
     } catch (error) {
       console.error(error);
