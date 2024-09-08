@@ -83,7 +83,7 @@ function Ministro() {
     }));
 
     return (
-        <div className='gridTop main-Conf'>
+        <div className='gridTop main-bau'>
             <div>
                 <h2>Ministros</h2>
                 <TextField
@@ -107,7 +107,7 @@ function Ministro() {
                             <div className={`gridCentrao similarAccordion pb ${ministro.min_parroco_actual == 1 ? 'CParroco' : ''}`} key={ministro.min_id}>
                                 <div className="gridCentrao grid-2colum-equal">
                                     <h3>{ministro.min_nombre}</h3>
-                                    <p>{ministro.min_b_parroco == 1 ? "Ha sido párroco" : "Nelson"}</p>
+                                    <p>{ministro.min_parroco_actual == 1 ? 'Párraco' : (ministro.min_b_parroco == 1 ? "Ha sido párroco" : "Sacerdote")}</p>
                                 </div>
                                 <div className="ministro-actions">
                                     <Tooltip title="Editar">

@@ -44,7 +44,11 @@
 }
 
 .input-separado {
-    padding-top: 2.5vh;
+    padding-top: 2vh;
+}
+
+.rowgap {
+    grid-row-gap: 2vh;
 }
 
 .input-separado-2 {

@@ -88,19 +88,6 @@ body.dark-mode {
     0.6px 0.6px 0 #000;
 }
 
-.card-interno {
-  overflow: auto;
-  height: 25vh;
-  background-color: #e5e5e5;
-  text-align: center;
-  border-radius: 3vh;
-  margin-top: 0%;
-}
-
-.card-interno p {
-  line-height: 0.5;
-}
-
 .parr-inicio p {
   font-size: 1.4vmax;
   line-height: 0.9;
@@ -285,13 +272,15 @@ form {
 }
 
 .grid-2colum-noequal {
-  grid-template-columns: 63% 37%;
+  grid-template-columns: 62% 36%;
   grid-column-gap: 2vw;
 }
+
 .grid-2colum-noequal-2 {
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 29% 69%;
   grid-column-gap: 2vw;
 }
+
 .grid-2colum-noequal2 {
   grid-template-columns: 50% 40%;
   grid-column-gap: 2vw;
@@ -420,6 +409,7 @@ form {
 
 .main-bau {
   grid-template-rows: 93% 7%;
+  width: 75vw;
 }
 
 .grid-header-bau {
@@ -433,7 +423,7 @@ form {
 }
 
 .grid-header-min {
-  grid-template-columns: 45% 12% 45%;
+  grid-template-columns: 45% 19% 31%;
   font-weight: bold;
 }
 
@@ -501,4 +491,50 @@ form {
 .CParroco {
   background-color: #b7f3f1;
   border: 2px solid #0d615e;
+}
+
+.ownCard {
+  display: grid;
+  border-radius: 8px;
+  border: 1.5px solid #0d615e;
+  padding: 2vh 1vw 2vh 1vw;
+  text-decoration: none;
+  color: rgb(233, 233, 233);
+}
+
+.imgCard img {
+  width: 20vw;
+  height: 20vh;
+  border-radius: 8px;
+}
+
+
+.longCard {
+  height: 100%;
+  width: 20vw;
+}
+
+.inicioCard {
+  background-color: #54aca9;
+}
+
+.card-interno {
+  overflow: auto;
+  height: 18vh;
+  background-color: #0d5f5c;
+  text-align: center;
+  border-radius: 3vh;
+  margin: 1vh 0 1vh 0;
+}
+
+.card-interno p {
+  line-height: 0.5;
+}
+
+.modifiedAccordion {
+  border: 2px solid #919191;
+}
+
+.marginAccordion {
+  margin-bottom: 1.5vh;
 }

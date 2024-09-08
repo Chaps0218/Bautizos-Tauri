@@ -14,38 +14,28 @@ const Inicio = () => {
         <h1 id='nombre_inicio' >Bienvenido, {user.usu_nombre}</h1>
         <h1 id='vicaria_inicio'>Vicaria Episcopal Nuestra Señora de la Merced</h1>
       </div>
-      <div className='gridCentrao3 grid-3colum-inicio'>
-        <Link to="/confirmaciones" style={{ textDecoration: 'none' }}>
-          <div>
-            <Card sx={{ minHeight: 200, backgroundColor: '#ced4da', borderRadius: 4 }}>
-              <CardContent>
-                <div >
-                  <img src="/images/confirmados2.jpg" alt="confirmados" width="100%" height="100"></img>
-                </div>
-                <strong>Agregar confirmado</strong>
-              </CardContent>
-            </Card>
+
+      <div className='gridCentrao3 grid-2colum-equal'>
+        <Link to="/bautizados" style={{ textDecoration: 'none' }}>
+          <div className='ownCard longCard inicioCard'>
+            <div className='imgCard'>
+              <img src="/images/confirmados2.jpg" alt="bautizados"></img>
+            </div>
+            <strong>Agregar Bautizados</strong>
           </div>
         </Link>
         <div>
-          <Card sx={{ maxHeight: 200, backgroundColor: '#ced4da', borderRadius: 4 }}>
-            <CardContent>
-              <div className='card-inicio'>
-                <div className='gridCentrao3'>
-                  <strong>Información cuentas</strong>
-                </div>
-
-                <div className='card-interno '>
-                  <p>{user.usu_nombre}  {user.usu_apellido}</p>
-                  {user.usu_rol === "Admin" ? <p>{"Administrador"}</p> :
-                    <p>{user.usu_rol}</p>}
-                  <p>{user.usu_user}</p>
-                  <p>{user.est_nombre}</p>
-                </div>
-              </div>
-
-            </CardContent>
-          </Card>
+          <div className='ownCard longCard inicioCard'>
+            <div className='gridCentrao3'>
+              <strong>Información cuentas</strong>
+            </div>
+            <div className='card-interno'>
+              <p>{user.usu_nombre}  {user.usu_apellido}</p>
+              {user.usu_rol === "Admin" ? <p>{"Administrador"}</p> :
+                <p>{user.usu_rol}</p>}
+              <p>{user.usu_username}</p>
+            </div>
+          </div>
         </div>
       </div>
 

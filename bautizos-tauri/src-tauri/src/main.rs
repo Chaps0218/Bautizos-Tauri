@@ -277,8 +277,8 @@ async fn get_all_bautizados() -> Result<Vec<Bautizado>, String> {
 async fn handle_add_bautizado(input: BautizadoAdd) -> Result<String, String> {
     let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
     let insert_query = r#"
-        INSERT INTO bautizado (bau_nombres, bau_apellidos, bau_cedula, bau_fecha_nac, bau_lugar_nac, bau_min_bau, bau_padre, bau_madre, bau_padrinos, bau_min_cert, bau_fecha_bau, bau_tomo, bau_pag, bau_num, bau_tomo_nac, bau_pag_nac, bau_acta_nac, bau_nota)
-        VALUES (:bau_nombres, :bau_apellidos, :bau_cedula, :bau_fecha_nac, :bau_lugar_nac, :bau_min_bau, :bau_padre, :bau_madre, :bau_padrinos, :bau_min_cert, :bau_fecha_bau, :bau_tomo, :bau_pag, :bau_num, :bau_tomo_nac, :bau_pag_nac, :bau_acta_nac, :bau_nota)
+        INSERT INTO bautizado (bau_nombres, bau_apellidos, bau_cedula, bau_fecha_nac, bau_lugar_nac, bau_min_bau, bau_padre, bau_madre, bau_padrinos, bau_min_cert, bau_fecha_bau, bau_tomo, bau_pag, bau_num, bau_fecha_acta, bau_anio_acta, bau_tomo_nac, bau_pag_nac, bau_acta_nac, bau_nota)
+        VALUES (:bau_nombres, :bau_apellidos, :bau_cedula, :bau_fecha_nac, :bau_lugar_nac, :bau_min_bau, :bau_padre, :bau_madre, :bau_padrinos, :bau_min_cert, :bau_fecha_bau, :bau_tomo, :bau_pag, :bau_num, :bau_fecha_acta, :bau_anio_acta, :bau_tomo_nac, :bau_pag_nac, :bau_acta_nac, :bau_nota)
     "#;
 
     conn.exec_drop(
@@ -298,6 +298,8 @@ async fn handle_add_bautizado(input: BautizadoAdd) -> Result<String, String> {
             "bau_tomo" => &input.bau_tomo,
             "bau_pag" => &input.bau_pag,
             "bau_num" => &input.bau_num,
+            "bau_fecha_acta" => &input.bau_fecha_acta,
+            "bau_anio_acta" => &input.bau_anio_acta,
             "bau_tomo_nac" => &input.bau_tomo_nac,
             "bau_pag_nac" => &input.bau_pag_nac,
             "bau_acta_nac" => &input.bau_acta_nac,
@@ -313,7 +315,7 @@ async fn handle_add_bautizado(input: BautizadoAdd) -> Result<String, String> {
 async fn handle_modify_bautizado(input: BautizadoMod) -> Result<String, String> {
     let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
     let modify_query = r#"
-        UPDATE bautizado SET bau_nombres = :bau_nombres, bau_apellidos = :bau_apellidos, bau_cedula = :bau_cedula, bau_fecha_nac = :bau_fecha_nac, bau_lugar_nac = :bau_lugar_nac, bau_min_bau = :bau_min_bau, bau_padre = :bau_padre, bau_madre = :bau_madre, bau_padrinos = :bau_padrinos, bau_min_cert = :bau_min_cert, bau_fecha_bau = :bau_fecha_bau, bau_tomo = :bau_tomo, bau_pag = :bau_pag, bau_num = :bau_num, bau_tomo_nac = :bau_tomo_nac, bau_pag_nac = :bau_pag_nac, bau_acta_nac = :bau_acta_nac, bau_nota = :bau_nota WHERE bau_id = :bau_id
+        UPDATE bautizado SET bau_nombres = :bau_nombres, bau_apellidos = :bau_apellidos, bau_cedula = :bau_cedula, bau_fecha_nac = :bau_fecha_nac, bau_lugar_nac = :bau_lugar_nac, bau_min_bau = :bau_min_bau, bau_padre = :bau_padre, bau_madre = :bau_madre, bau_padrinos = :bau_padrinos, bau_min_cert = :bau_min_cert, bau_fecha_bau = :bau_fecha_bau, bau_tomo = :bau_tomo, bau_pag = :bau_pag, bau_num = :bau_num, bau_fecha_acta = :bau_fecha_acta, bau_anio_acta = :bau_anio_acta, bau_tomo_nac = :bau_tomo_nac, bau_pag_nac = :bau_pag_nac, bau_acta_nac = :bau_acta_nac, bau_nota = :bau_nota WHERE bau_id = :bau_id
     "#;
 
     conn.exec_drop(
@@ -334,6 +336,8 @@ async fn handle_modify_bautizado(input: BautizadoMod) -> Result<String, String> 
             "bau_tomo" => &input.bau_tomo,
             "bau_pag" => &input.bau_pag,
             "bau_num" => &input.bau_num,
+            "bau_fecha_acta" => &input.bau_fecha_acta,
+            "bau_anio_acta" => &input.bau_anio_acta,
             "bau_tomo_nac" => &input.bau_tomo_nac,
             "bau_pag_nac" => &input.bau_pag_nac,
             "bau_acta_nac" => &input.bau_acta_nac,

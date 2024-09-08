@@ -51,7 +51,6 @@ function Bautizos() {
   const handleSavePopup = async (data) => {
     try {
       if (data.bau_id) {
-        console.log(data)
         await invoke('handle_modify_bautizado', { input: data });
       } else {
         await invoke('handle_add_bautizado', { input: data });
@@ -113,6 +112,12 @@ function Bautizos() {
     },
   }));
 
+  const AccordionDetailsEstilo = styled(AccordionDetails)(({ theme }) => ({
+    padding: theme.spacing(2),
+    borderTop: '1px solid rgba(0, 0, 0 , 1)',
+    backgroundColor: 'rgba(0,0,0, 0.05)',
+  }));
+
   useEffect(() => {
     fetchbautizados();
   }, []);
@@ -143,68 +148,67 @@ function Bautizos() {
           <p>Más</p>
         </div>
         <div className='overflow'>
-
           {filteredbautizados.map((bautizado) => (
-            <Accordion key={bautizado.bau_id}>
-              <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <div className='gridCentrao grid-2colum-noequal2'>
-                  <div>
-                    {bautizado.bau_nombres} {bautizado.bau_apellidos}
+            <div className='marginAccordion'>
+              <Accordion key={bautizado.bau_id} slotProps={{ transition: { unmountOnExit: true } }} className='modifiedAccordion'>
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+                  <div className='gridCentrao grid-2colum-noequal2'>
+                    <div>
+                      {bautizado.bau_nombres} {bautizado.bau_apellidos}
+                    </div>
+                    <div>
+                      {bautizado.bau_fecha_bau}
+                    </div>
                   </div>
-                  <div>
-                    {bautizado.bau_fecha_bau}
-                  </div>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-
-                <div className='gridCentrao2 grid2-colum '>
-                  <div className='gridCentrao'>
-                    <div className='gridCentrao2 grid-2colum-noequal-2'>
-                      <div>
-                        <strong>Cédula: </strong>
-                        <br />
-                        <strong>Padre: </strong>
-                        <br />
-                        <strong >Madre: </strong>
-                        <br />
-                        <strong >Padrino/Madrina: </strong>
-                        <br />
-                        <strong >Ministro de Bautizo:</strong>
-                        <br />
-                        <strong >Ministro Párroco:</strong>
-                        <br />
-                        {/* <strong className=''>Fecha de Nacimiento: </strong>
+                </AccordionSummary>
+                <AccordionDetailsEstilo>
+                  <div className='gridCentrao2 grid2-colum '>
+                    <div className='gridCentrao'>
+                      <div className='gridCentrao2 grid-2colum-noequal-2'>
+                        <div>
+                          <strong>Cédula: </strong>
+                          <br />
+                          <strong>Padre: </strong>
+                          <br />
+                          <strong >Madre: </strong>
+                          <br />
+                          <strong >Padrino/Madrina: </strong>
+                          <br />
+                          <strong >Ministro de Bautizo:</strong>
+                          <br />
+                          <strong >Ministro Párroco:</strong>
+                          <br />
+                          {/* <strong className=''>Fecha de Nacimiento: </strong>
                           {bautizado.bau_fecha_nac}
                         <strong className=''>Lugar de Nacimiento: </strong>
                           {bautizado.bau_lugar_nac}
                          */}
-                      </div>
-                      <div>
-                        <div>
-                          {bautizado.bau_cedula}
                         </div>
                         <div>
-                          {bautizado.bau_padre}
-                        </div>
-                        <div >
-                          {bautizado.bau_madre}
+                          <div>
+                            {bautizado.bau_cedula}
+                          </div>
+                          <div>
+                            {bautizado.bau_padre}
+                          </div>
+                          <div >
+                            {bautizado.bau_madre}
+                          </div>
+
+                          <div >
+                            {bautizado.bau_padrinos}
+                          </div>
+
+                          <div >
+                            {bautizado.bau_minbau_nombre}
+                          </div>
+
+                          <div >
+                            {bautizado.bau_mincert_nombre}
+                          </div>
                         </div>
 
-                        <div >
-                          {bautizado.bau_padrinos}
-                        </div>
-
-                        <div >
-                          {bautizado.bau_minbau_nombre}
-                        </div>
-
-                        <div >
-                          {bautizado.bau_mincert_nombre}
-                        </div>
-                      </div>
-
-                      {/* <div>
+                        {/* <div>
                         <strong>Información Registro Civil:</strong>
                         <div className='gridCentrao2 info-libro'>
                           <strong className='input-separado-2'>Tomo: </strong>
@@ -222,33 +226,33 @@ function Bautizos() {
                         </div>
                       </div> */}
 
+                      </div>
+
                     </div>
 
+                    <div className='acciones'>
+                      <Tooltip title="Editar">
+                        <IconButton
+                          aria-label="edit"
+                          color='success'
+                          fontSize='large'
+                          onClick={() => handleOpenPopup(bautizado)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Generar Reporte">
+                        <IconButton
+                          aria-label="Report"
+                          color="info"
+                          onClick={() => handleOpenPopupCert(bautizado)}
+                        >
+                          <AssignmentIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
                   </div>
-
-                  <div className='acciones'>
-                    <Tooltip title="Editar">
-                      <IconButton
-                        aria-label="edit"
-                        color='success'
-                        fontSize='large'
-                        onClick={() => handleOpenPopup(bautizado)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Generar Reporte">
-                      <IconButton
-                        aria-label="Report"
-                        color="info"
-                        onClick={() => handleOpenPopupCert(bautizado)}
-                      >
-                        <AssignmentIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </div>
-                </div>
-                <div>
+                  <div>
                     <strong>Información Bautizo:</strong>
                     <div className='gridCentrao2 info-libro'>
                       <strong className='input-separado-2'>Tomo: </strong>
@@ -263,10 +267,11 @@ function Bautizos() {
                       <div>
                         {bautizado.bau_num}
                       </div>
+                    </div>
                   </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
+                </AccordionDetailsEstilo>
+              </Accordion>
+            </div>
           ))}
         </div>
       </div>
