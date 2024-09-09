@@ -155,8 +155,8 @@ function Bautizos() {
         </div>
         <div className='overflow'>
           {filteredbautizados.map((bautizado) => (
-            <div className='marginAccordion'>
-              <Accordion key={bautizado.bau_id} slotProps={{ transition: { unmountOnExit: true } }} className='modifiedAccordion'>
+            <div className='marginAccordion' key={bautizado.bau_id}>
+              <Accordion slotProps={{ transition: { unmountOnExit: true } }} className='modifiedAccordion'>
                 <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
                   <div className='gridCentrao grid-2colum-noequal2'>
                     <div>

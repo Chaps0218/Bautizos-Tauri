@@ -80,9 +80,9 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
 
     async function generatePDF() {
         const doc = new jsPDF();
-        let lineHeight = 8; // Altura de cada línea
+        let lineHeight = 7; // Altura de cada línea
         let marginLeft = 20; // Margen izquierdo
-        let marginTop = 30; // Margen superior
+        let marginTop = 55; // Margen superior
         let currentY = marginTop; // Posición vertical inicial
 
         let currentParishPriest;
@@ -98,31 +98,33 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
             currentParishPriest = { min_nombre: "MARCO GUALOTO" };
         }
 
-        doc.addFont("/fonts/georgiab.ttf", "georgia", "bold");
-        doc.addFont("/fonts/georgiaz.ttf", "georgia", "bolditalic");
-        doc.addFont("/fonts/VerdanaNow.ttf", "verdana", "normal");
-        doc.addFont("/fonts/verdana-bold.ttf", "verdana", "bold");
+        doc.addFont("/fonts/georgiab.ttf", "Georgia-Bold", "bold");
+        doc.addFont("/fonts/georgiaz.ttf", "Georgia-BoldItalic", "bolditalic");
+        doc.addFont("/fonts/georgia.ttf", "Georgia", "normal");
+        doc.addFont("/fonts/VerdanaNow.ttf", "Verdana", "normal");
+        doc.addFont("/fonts/verdana-bold.ttf", "Verdana-Bold", "bold");
 
         // Encabezado
-        doc.setFont("georgia", "bold");
+        doc.setFont("Georgia-Bold", "bold");
         doc.setTextColor(35, 46, 114);
         doc.setFontSize(20);
         doc.text("CERTIFICADO DE BAUTISMO", 105, currentY, { align: "center" });
 
         // Información general
         const currentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
-        currentY += lineHeight;
-        doc.setFontSize(12);
+        currentY += lineHeight + 1;
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(10);
         doc.text(`QUITO, ${currentDate}`, 190, currentY, { align: 'right' });
 
         // Posición inicial para la información del certificado
         currentY += lineHeight + 5; // Espacio extra entre el título y el contenido
 
-        doc.setFont("verdana", "normal");
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(10);
+        doc.setFont("Verdana", "normal");
 
-        let maxWidth = doc.internal.pageSize.getWidth() - 40;
+
+        let maxWidth = doc.internal.pageSize.getWidth() - 20;
+        let maxWidthColumna = doc.internal.pageSize.getWidth() - 140;
 
         const lines = [
             { text: "Certifico que en el Tomo ", style: "normal", endline: false },
@@ -132,7 +134,6 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
             { text: " No. ", style: "normal", endline: false },
             { text: `${formData.bau_num}`, style: "bold", endline: false },
             { text: " de partidas Bautismales se encuentra inscrita una partida con los siguientes datos:", style: "normal", endline: false },
-            { text: " PROBANDO DESPUES, mucho despúés, taaanto después", style: "normal", endline: false },
         ];
 
         lines.forEach(line => {
@@ -164,6 +165,171 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
                 currentY += lineHeight;
             }
         });
+
+        const datos = [
+            { text: "Datos:", style: "bold", endline: true },
+            { text: `${formData.bau_nombres}`, style: "normal", endline: true },
+            { text: `${formData.bau_apellidos}`, style: "normal", endline: true },
+        ]
+
+        currentY += lineHeight + 5;
+        let currentY2 = currentY;
+        marginLeft = 20;
+
+        datos.forEach(line => {
+            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontStyle = line.style === "bold" ? "bold" : "normal";
+            doc.setFont(fontType, fontStyle);
+
+            let text = line.text;
+            let textWidth = doc.getTextWidth(text);
+
+            if (marginLeft + textWidth > maxWidthColumna) {
+                const splitText = doc.splitTextToSize(text, maxWidthColumna - marginLeft);
+                splitText.forEach((txtLine, index) => {
+
+                    doc.text(txtLine, marginLeft, currentY);
+                    marginLeft = 20;
+                    currentY += lineHeight;
+
+                });
+            } else {
+                doc.text(text, marginLeft, currentY);
+                marginLeft += textWidth;
+            }
+            if (line.endline) {
+                marginLeft = 20;
+                currentY += lineHeight;
+            }
+        });
+
+        const notaMarginal = [
+            { text: "Nota Marginal", style: "bold", endline: true },
+            { text: `${formData.bau_nota}`, style: "normal", endline: true },
+        ]
+
+        currentY += lineHeight + 10;
+
+        notaMarginal.forEach(line => {
+            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontStyle = line.style === "bold" ? "bold" : "normal";
+            doc.setFont(fontType, fontStyle);
+
+            let text = line.text;
+            let textWidth = doc.getTextWidth(text);
+
+            if (marginLeft + textWidth > maxWidthColumna) {
+                const splitText = doc.splitTextToSize(text, maxWidthColumna - marginLeft);
+                splitText.forEach((txtLine, index) => {
+
+                    doc.text(txtLine, marginLeft, currentY);
+                    marginLeft = 20;
+                    currentY += lineHeight;
+
+                });
+            } else {
+                doc.text(text, marginLeft, currentY);
+                marginLeft += textWidth;
+            }
+            if (line.endline) {
+                marginLeft = 20;
+                currentY += lineHeight;
+            }
+        });
+
+        const rCivil = [
+            { text: "R. Civil.", style: "bold", endline: true },
+            { text: `Código: ${formData.bau_cedula}`, style: "normal", endline: true },
+            { text: `Año: ${formData.bau_anio_acta}`, style: "normal", endline: true },
+            { text: `Tomo: ${formData.bau_tomo_nac}`, style: "normal", endline: true },
+            { text: `Pág: ${formData.bau_pag_nac}`, style: "normal", endline: true },
+            { text: `Acta: ${formData.bau_acta_nac}`, style: "normal", endline: true },
+            { text: `Lugar: ${formData.bau_lugar_nac}`, style: "normal", endline: true },
+        ]
+
+        currentY += lineHeight + 10;
+
+        rCivil.forEach(line => {
+            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontStyle = line.style === "bold" ? "bold" : "normal";
+            doc.setFont(fontType, fontStyle);
+
+            let text = line.text;
+            let textWidth = doc.getTextWidth(text);
+
+            if (marginLeft + textWidth > maxWidthColumna) {
+                const splitText = doc.splitTextToSize(text, maxWidthColumna - marginLeft);
+                splitText.forEach((txtLine, index) => {
+
+                    doc.text(txtLine, marginLeft, currentY);
+                    marginLeft = 20;
+                    currentY += lineHeight;
+
+                });
+            } else {
+                doc.text(text, marginLeft, currentY);
+                marginLeft += textWidth;
+            }
+            if (line.endline) {
+                marginLeft = 20;
+                currentY += lineHeight;
+            }
+        });
+
+        let fecha_bau_js = dayjs(formData.bau_fecha_bau, 'YYYY-MM-DD').locale('es');
+        let fecha_nac_js = dayjs(formData.bau_fecha_nac, 'YYYY-MM-DD').locale('es');
+
+        const parrafo = [
+            { text: `El ${fecha_bau_js.format('DD [del mes de] MMMM [del año del Señor] YYYY')} en (lugar) NUESTRA SEÑORA DE LA MERCED "LA ARCADIA" el (ministro) ${formData.bau_minbau_nombre} bautizó solemnemente a ${formData.bau_nombres} ${formData.bau_apellidos}, nacido/a en ${formData.bau_lugar_nac} el ${fecha_nac_js.format('DD [de] MMMM [del] YYYY')}`, style: "normal", endline: false },
+            { text: `hijo/a de ${formData.bau_padre}`, style: "normal", endline: true },
+            { text: `y de ${formData.bau_madre}`, endline: true },
+            { text: `feligreses de NUESTRA SEÑORA DE LA MERCED "LA ARCADIA"`, style: "normal", endline: false },
+            { text: "Fueron padrino (s)/ madrina(s)", endline: true },
+            { text: `${formData.bau_padrinos}`, style: "normal", endline: true },
+            { text: "a quien (es) se advirtió sus obligaciones y parentesco espiritual.", style: "normal", endline: false },
+            { text: "Lo certifica:", style: "normal", endline: true },
+            { text: `${formData.bau_mincert_nombre}`, style: "normal", endline: true },
+            { text: "Son datos fielmente tomados del original.", style: "normal", endline: true },
+            { text: "Lo certifico,", style: "bold", endline: true },
+            { text: `${currentParishPriest.min_nombre}`, style: "normal", endline: true },
+        ];
+
+        let marginLeftParrafo = 80;
+        currentY = currentY2;
+
+        parrafo.forEach(line => {
+            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontStyle = line.style === "bold" ? "bold" : "normal";
+            doc.setFont(fontType, fontStyle);
+
+            let text = line.text;
+            let textWidth = doc.getTextWidth(text);
+
+            if (marginLeftParrafo + textWidth > maxWidth) {
+                const splitText = doc.splitTextToSize(text, maxWidth - marginLeftParrafo);
+                splitText.forEach((txtLine, index) => {
+
+                    doc.text(txtLine, marginLeftParrafo, currentY);
+                    marginLeftParrafo = 80;
+                    currentY += lineHeight;
+
+                });
+            } else {
+                doc.text(text, marginLeftParrafo, currentY);
+                marginLeftParrafo += textWidth;
+            }
+            if (line.endline) {
+                marginLeftParrafo = 80;
+                currentY += lineHeight;
+            }
+        });
+
+        currentY += lineHeight + 2;
+        doc.setFont("Georgia-Bold", "bold");
+        doc.text(`F. ___________________`, 150, currentY += lineHeight, null, null, 'center');
+        doc.text(`${currentParishPriest.min_nombre}`, 150, currentY += lineHeight, null, null, 'center');
+        doc.text("PÁRROCO", 150, currentY += lineHeight, null, null, 'center');
+
 
         const pdfBytes = doc.output('arraybuffer');
         const fileName = `certificado_bautismo_${formData.bau_nombres}_${formData.bau_apellidos}_${now.format("YYYY-MM-DD_HH_mm_ss")}.pdf`;
