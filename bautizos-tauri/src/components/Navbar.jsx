@@ -18,8 +18,8 @@ import {
 const data = [
   { link: '/perfil', label: 'Perfil', icon: faUser, permisos: 1 },
   { link: '/home', label: 'Inicio', icon: faChurch, permisos: 1 },
-  { link: '/ministros', label: 'Ministros', icon: faUserTie, permisos: 2 },
   { link: '/bautizados', label: 'Bautizados', icon: faCross, permisos: 1 },
+  { link: '/ministros', label: 'Ministros', icon: faUserTie, permisos: 2 },
   { link: '/usuarios', label: 'Usuarios', icon: faUsers, permisos: 2 }
 ];
 

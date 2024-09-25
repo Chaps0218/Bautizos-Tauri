@@ -249,6 +249,13 @@ form {
   place-items: center;
 }
 
+.gridCentraoNoFull3 {
+  display: grid;
+  width: 92%;
+  place-items: center;
+  padding-left: 1vw;
+}
+
 .gridCentraoButtons {
   display: grid;
   place-items: center;
@@ -293,7 +300,6 @@ form {
 .grid-2colum-noequal-2 {
   grid-template-columns: 29% 69%;
   grid-column-gap: 2vw;
-  padding-left: 6vw;
 }
 
 .grid-2colum-noequal-2>* {
@@ -303,6 +309,12 @@ form {
 .grid-2colum-noequal2 {
   grid-template-columns: 50% 40%;
   grid-column-gap: 2vw;
+}
+
+@media (max-width: 1000px) {
+  .grid-2colum-noequal-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .grid-2row-equal {
@@ -339,7 +351,7 @@ form {
 }
 
 .grid-3colum-equal {
-  grid-template-columns: 32% 32% 32%;
+  grid-template-columns: 31.65% 31.65% 31.65%;
   grid-column-end: 1vw;
   grid-column-gap: 1.7vw;
 }

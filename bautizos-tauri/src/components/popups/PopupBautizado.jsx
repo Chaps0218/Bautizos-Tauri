@@ -220,14 +220,32 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                     <h2>Datos Registro Civil</h2>
                                 </div>
                                 <div >
-                                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                                        <DatePicker
-                                            label="Fecha de Nacimiento"
-                                            value={dayjs(formData.bau_fecha_nac).locale('es')}
-                                            onChange={handleDateNacChange}
-                                            textField={(params) => <TextField {...params} />}
+                                    <div className='input-separado'>
+                                        <TextField
+                                            fullWidth
+                                            label="Lugar de Nacimiento"
+                                            name="bau_lugar_nac"
+                                            size="small"
+                                            onChange={handleChange}
+                                            onBlur={handleChange}
+                                            value={formData.bau_lugar_nac}
+                                            autoComplete='one-time-code'
                                         />
-                                    </LocalizationProvider>
+                                    </div>
+
+
+                                    <div className='input-separado'>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es" >
+                                            <DatePicker
+                                                label="Fecha de Nacimiento"
+                                                value={dayjs(formData.bau_fecha_nac).locale('es')}
+                                                onChange={handleDateNacChange}
+                                                textField={(params) => <TextField {...params} />}
+                                                className="grande"
+                                            />
+                                        </LocalizationProvider>
+
+                                    </div>
 
                                     <div className='input-separado'>
                                         <TextField
@@ -242,18 +260,6 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                         />
                                     </div>
 
-                                    <div className='input-separado'>
-                                        <TextField
-                                            fullWidth
-                                            label="Lugar de Nacimiento"
-                                            name="bau_lugar_nac"
-                                            size="small"
-                                            onChange={handleChange}
-                                            onBlur={handleChange}
-                                            value={formData.bau_lugar_nac}
-                                            autoComplete='one-time-code'
-                                        />
-                                    </div>
                                     <div className='gridCentraoNoFull grid-2colum-equal input-separado rowgap'>
                                         <TextField
                                             fullWidth
@@ -307,6 +313,7 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                                 value={dayjs(formData.bau_fecha_acta).locale('es')}
                                                 onChange={handleDateActaChange}
                                                 textField={(params) => <TextField {...params} />}
+                                                className="grande"
                                             />
                                         </LocalizationProvider>
                                     </div>
@@ -317,6 +324,26 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                             <CardContent>
                                 <div className="gridCentraoNoFull2">
                                     <h2>Datos de Bautizo</h2>
+                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+                                            <DatePicker
+                                                label="Fecha de Bautizo"
+                                                value={dayjs(formData.bau_fecha_bau).locale('es')}
+                                                onChange={handleDateBauChange}
+                                                textField={(params) => <TextField {...params} />}
+                                                className="grande"
+                                            />
+                                        </LocalizationProvider>
+                                        <Autocomplete
+                                            fullWidth
+                                            options={ministros}
+                                            size="small"
+                                            getOptionLabel={(option) => option.min_nombre}
+                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'bau_min_bau')}
+                                            value={ministros.find((ministro) => ministro.min_id === formData.bau_min_bau) || null}
+                                            renderInput={(params) => <TextField {...params} label="Ministro de Bautizo" />}
+                                        />
+                                    </div>
                                     <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
                                         <TextField
                                             fullWidth
@@ -365,7 +392,7 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                             autoComplete='one-time-code'
                                         />
                                     </div>
-                                    <div className='gridCentraoNoFull grid-2colum-equal input-separado'>
+                                    <div className='gridCentraoNoFull3 input-separado'>
                                         <TextField
                                             fullWidth
                                             label="Padrinos del Bautizado"
@@ -376,25 +403,8 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                             value={formData.bau_padrinos}
                                             autoComplete='one-time-code'
                                         />
-                                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                                            <DatePicker
-                                                label="Fecha de Bautizo"
-                                                value={dayjs(formData.bau_fecha_bau).locale('es')}
-                                                onChange={handleDateBauChange}
-                                                textField={(params) => <TextField {...params} />}
-                                            />
-                                        </LocalizationProvider>
                                     </div>
-                                    <div className='gridCentraoNoFull grid-2colum-equal  input-separado'>
-                                        <Autocomplete
-                                            fullWidth
-                                            options={ministros}
-                                            size="small"
-                                            getOptionLabel={(option) => option.min_nombre}
-                                            onChange={(event, value) => handleAutocompleteChange(event, value, 'bau_min_bau')}
-                                            value={ministros.find((ministro) => ministro.min_id === formData.bau_min_bau) || null}
-                                            renderInput={(params) => <TextField {...params} label="Ministro de Bautizo" />}
-                                        />
+                                    <div className='gridCentraoNoFull3 input-separado'>
                                         <Autocomplete
                                             fullWidth
                                             options={ministrosParrocos}
@@ -440,7 +450,7 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                                             autoComplete='one-time-code'
                                         />
                                     </div>
-                                    <div className='gridCentraoNoFull input-separado'>
+                                    <div className='gridCentraoNoFull3 input-separado'>
                                         <TextField
                                             fullWidth
                                             label="Notas"
