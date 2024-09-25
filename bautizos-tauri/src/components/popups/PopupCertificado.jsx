@@ -114,16 +114,16 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         const currentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
         currentY += lineHeight + 1;
         doc.setTextColor(0, 0, 0);
-        doc.setFontSize(10);
+        doc.setFontSize(11);
         doc.text(`QUITO, ${currentDate}`, 190, currentY, { align: 'right' });
 
         // Posición inicial para la información del certificado
         currentY += lineHeight + 5; // Espacio extra entre el título y el contenido
 
-        doc.setFont("Verdana", "normal");
+        doc.setFont("Georgia", "normal");
 
 
-        let maxWidth = doc.internal.pageSize.getWidth() - 20;
+        let maxWidth = doc.internal.pageSize.getWidth() - 15;
         let maxWidthColumna = doc.internal.pageSize.getWidth() - 140;
 
         const lines = [
@@ -137,7 +137,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         ];
 
         lines.forEach(line => {
-            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontType = line.style === "bold" ? "Georgia-Bold" : "Georgia";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
 
@@ -177,7 +177,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         marginLeft = 20;
 
         datos.forEach(line => {
-            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontType = line.style === "bold" ? "Georgia-Bold" : "Georgia";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
 
@@ -211,7 +211,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         currentY += lineHeight + 10;
 
         notaMarginal.forEach(line => {
-            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontType = line.style === "bold" ? "Georgia-Bold" : "Georgia";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
 
@@ -240,6 +240,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         const rCivil = [
             { text: "R. Civil.", style: "bold", endline: true },
             { text: `Código: ${formData.bau_cedula}`, style: "normal", endline: true },
+            { text: ` `, style: "normal", endline: true },
             { text: `Año: ${formData.bau_anio_acta}`, style: "normal", endline: true },
             { text: `Tomo: ${formData.bau_tomo_nac}`, style: "normal", endline: true },
             { text: `Pág: ${formData.bau_pag_nac}`, style: "normal", endline: true },
@@ -250,7 +251,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         currentY += lineHeight + 10;
 
         rCivil.forEach(line => {
-            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontType = line.style === "bold" ? "Georgia-Bold" : "Georgia";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
 
@@ -280,13 +281,17 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         let fecha_nac_js = dayjs(formData.bau_fecha_nac, 'YYYY-MM-DD').locale('es');
 
         const parrafo = [
-            { text: `El ${fecha_bau_js.format('DD [del mes de] MMMM [del año del Señor] YYYY')} en (lugar) NUESTRA SEÑORA DE LA MERCED "LA ARCADIA" el (ministro) ${formData.bau_minbau_nombre} bautizó solemnemente a ${formData.bau_nombres} ${formData.bau_apellidos}, nacido/a en ${formData.bau_lugar_nac} el ${fecha_nac_js.format('DD [de] MMMM [del] YYYY')}`, style: "normal", endline: false },
+            { text: `El ${fecha_bau_js.format('DD [del mes de] MMMM [del año del Señor] YYYY')} `, style: "normal", endline: true },
+            { text: `en NUESTRA SEÑORA DE LA MERCED "LA ARCADIA" `, style: "normal", endline: true },
+            { text: `el ${formData.bau_minbau_nombre} bautizó`, style: "normal", endline: true },
+            { text: `solemnemente a ${formData.bau_nombres} ${formData.bau_apellidos}`, style: "normal", endline: true },
+            { text: `nacido/a en ${formData.bau_lugar_nac} el ${fecha_nac_js.format('DD [de] MMMM [del] YYYY')}`, style: "normal", endline: true },
             { text: `hijo/a de ${formData.bau_padre}`, style: "normal", endline: true },
-            { text: `y de ${formData.bau_madre}`, endline: true },
-            { text: `feligreses de NUESTRA SEÑORA DE LA MERCED "LA ARCADIA"`, style: "normal", endline: false },
-            { text: "Fueron padrino (s)/ madrina(s)", endline: true },
+            { text: `y de ${formData.bau_madre}`, style: "normal", endline: true },
+            { text: `feligreses de NUESTRA SEÑORA DE LA MERCED "LA ARCADIA"`, style: "normal", endline: true },
+            { text: "Fueron padrino (s)/ madrina(s)", style: "normal", endline: true },
             { text: `${formData.bau_padrinos}`, style: "normal", endline: true },
-            { text: "a quien (es) se advirtió sus obligaciones y parentesco espiritual.", style: "normal", endline: false },
+            { text: "a quien (es) se advirtió sus obligaciones y parentesco espiritual.", style: "normal", endline: true },
             { text: "Lo certifica:", style: "normal", endline: true },
             { text: `${formData.bau_mincert_nombre}`, style: "normal", endline: true },
             { text: "Son datos fielmente tomados del original.", style: "normal", endline: true },
@@ -298,7 +303,7 @@ function PopupCertificado({ isOpen, onClose, onGenerate, initialData }) {
         currentY = currentY2;
 
         parrafo.forEach(line => {
-            const fontType = line.style === "bold" ? "Verdana-Bold" : "Verdana";
+            const fontType = line.style === "bold" ? "Georgia-Bold" : "Georgia";
             const fontStyle = line.style === "bold" ? "bold" : "normal";
             doc.setFont(fontType, fontStyle);
 
