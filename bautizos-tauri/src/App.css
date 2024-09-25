@@ -37,7 +37,7 @@ body.dark-mode {
   width: 35vw;
   height: 70vh;
   background-color: #08B7B0;
-  border-radius: 1.5% 0 0 1.5%;
+  border-radius: 0 1.5% 1.5% 0;
   display: grid;
   place-items: center;
 }
@@ -46,13 +46,13 @@ body.dark-mode {
   width: 35vw;
   height: 70vh;
   background-color: #ffffffbe;
-  border-radius: 0 1.5% 1.5% 0;
+  border-radius: 1.5% 0 0 1.5%;
   display: grid;
   place-items: center;
 }
 
 .header-inicio {
-  background-image: url('./images/bg_login_virgen.jpg');
+  background-image: url('./images/bg_inicio_virgen.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: initial;
@@ -182,10 +182,11 @@ form {
   padding-bottom: 20%;
 }
 
-.nombre{
+.nombre {
   display: grid;
   place-items: left;
 }
+
 .card-inicio {
   display: grid;
   grid-template-rows: 20% 50%;
