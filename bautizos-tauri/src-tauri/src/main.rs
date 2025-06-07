@@ -263,6 +263,8 @@ async fn flush_min_actual() -> Result<String, String> {
     }
 }
 
+// Bautizados Commands
+
 #[tauri::command]
 async fn get_all_bautizados() -> Result<Vec<Bautizado>, String> {
     let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
@@ -271,6 +273,71 @@ async fn get_all_bautizados() -> Result<Vec<Bautizado>, String> {
         .map_err(|e| e.to_string())?;
 
     Ok(bautizados)
+}
+
+#[tauri::command]
+async fn get_bautizados_count() -> Result<u64, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let count: Option<u64> = conn
+        .query_first("SELECT COUNT(*) FROM bautizado")
+        .map_err(|e| e.to_string())?;
+    Ok(count.unwrap_or(0))
+}
+
+#[tauri::command]
+async fn get_bautizados_paginated(offset: u64, limit: u64) -> Result<Vec<Bautizado>, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let query = r#"
+        select bau.*, ma.min_nombre as bau_minbau_nombre, mb.min_nombre as bau_mincert_nombre
+        from bautizado as bau
+        inner join ministro as ma on bau.bau_min_bau = ma.min_id
+        inner join ministro as mb on bau.bau_min_cert = mb.min_id
+        order by bau.bau_id desc
+        limit :limit offset :offset
+    "#;
+    let bautizados: Vec<Bautizado> = conn
+        .exec(query, params! { "limit" => limit, "offset" => offset })
+        .map_err(|e| e.to_string())?;
+    Ok(bautizados)
+}
+
+#[tauri::command]
+async fn search_bautizados(query: String, offset: u64, limit: u64) -> Result<Vec<Bautizado>, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let like_query = format!("%{}%", query);
+    let sql = r#"
+        select bau.*, ma.min_nombre as bau_minbau_nombre, mb.min_nombre as bau_mincert_nombre
+        from bautizado as bau
+        inner join ministro as ma on bau.bau_min_bau = ma.min_id
+        inner join ministro as mb on bau.bau_min_cert = mb.min_id
+        where bau.bau_nombres like :query
+           or bau.bau_apellidos like :query
+           or bau.bau_cedula like :query
+           or bau.bau_fecha_bau like :query
+        order by bau.bau_id desc
+        limit :limit offset :offset
+    "#;
+    let bautizados: Vec<Bautizado> = conn
+        .exec(sql, params! { "query" => &like_query, "limit" => limit, "offset" => offset })
+        .map_err(|e| e.to_string())?;
+    Ok(bautizados)
+}
+
+#[tauri::command]
+async fn search_bautizados_count(query: String) -> Result<u64, String> {
+    let mut conn = get_db_connection().await.map_err(|e| e.to_string())?;
+    let like_query = format!("%{}%", query);
+    let sql = r#"
+        select count(*) from bautizado
+        where bau_nombres like :query
+           or bau_apellidos like :query
+           or bau_cedula like :query
+           or bau_fecha_bau like :query
+    "#;
+    let count: Option<u64> = conn
+        .exec_first(sql, params! { "query" => &like_query })
+        .map_err(|e| e.to_string())?;
+    Ok(count.unwrap_or(0))
 }
 
 #[tauri::command]
@@ -371,7 +438,11 @@ fn main() {
             open_file,
             get_all_bautizados,
             handle_add_bautizado,
-            handle_modify_bautizado
+            handle_modify_bautizado,
+            get_bautizados_count,
+            get_bautizados_paginated,
+            search_bautizados,
+            search_bautizados_count,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

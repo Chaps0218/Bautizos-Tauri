@@ -18,6 +18,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import './popup.css';
 import '../../App.css';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
     const { user } = useUser();
@@ -47,6 +48,7 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
     const [errors, setErrors] = useState({});
     const [ministros, setMinistros] = useState([]);
     const [ministrosParrocos, setMinistrosParrocos] = useState([]);
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         const fetchMinistros = async () => {
@@ -172,19 +174,24 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (validateForm()) {
-            formData.bau_tomo = Number(formData.bau_tomo);
-            formData.bau_pag = Number(formData.bau_pag);
-            formData.bau_num = Number(formData.bau_num);
-            formData.bau_tomo_nac = Number(formData.bau_tomo_nac);
-            formData.bau_pag_nac = Number(formData.bau_pag_nac);
-            formData.bau_acta_nac = Number(formData.bau_acta_nac);
-            formData.bau_min_bau = Number(formData.bau_min_bau);
-            formData.bau_min_cert = Number(formData.bau_min_cert);
-            formData.bau_anio_acta = Number(formData.bau_anio_acta);
+            setSaving(true);
+            try {
+                formData.bau_tomo = Number(formData.bau_tomo);
+                formData.bau_pag = Number(formData.bau_pag);
+                formData.bau_num = Number(formData.bau_num);
+                formData.bau_tomo_nac = Number(formData.bau_tomo_nac);
+                formData.bau_pag_nac = Number(formData.bau_pag_nac);
+                formData.bau_acta_nac = Number(formData.bau_acta_nac);
+                formData.bau_min_bau = Number(formData.bau_min_bau);
+                formData.bau_min_cert = Number(formData.bau_min_cert);
+                formData.bau_anio_acta = Number(formData.bau_anio_acta);
 
-            onSave(formData);
+                await onSave(formData);
+            } finally {
+                setSaving(false);
+            }
         }
     };
 
@@ -468,8 +475,22 @@ const PopupBautizado = ({ isOpen, onClose, onSave, initialData }) => {
                 </div>
                 <div className='gridCentrao'>
                     <div className="gridCentraoButtons grid-2colum-equal-lessSpace  input-separado">
-                        <ColorButton startIcon={<SaveIcon />} variant="contained" onClick={handleSubmit}>Guardar</ColorButton>
-                        <ColorButtonRed startIcon={<CloseIcon />} variant="contained" onClick={onClose}>Cancelar</ColorButtonRed>
+                        <ColorButton
+                            startIcon={saving ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+                            variant="contained"
+                            onClick={handleSubmit}
+                            disabled={saving}
+                        >
+                            {saving ? 'Guardando...' : 'Guardar'}
+                        </ColorButton>
+                        <ColorButtonRed
+                            startIcon={<CloseIcon />}
+                            variant="contained"
+                            onClick={onClose}
+                            disabled={saving}
+                        >
+                            Cancelar
+                        </ColorButtonRed>
                     </div>
                 </div>
             </div>

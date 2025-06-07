@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import { amber } from '@mui/material/colors';
 import '../App.css';
 import PopupMinistro from './popups/PopupMinistro';
+import Pagination from '@mui/material/Pagination';
 
 function Ministro() {
     const [ministros, setMinistros] = useState([]);
@@ -19,6 +20,19 @@ function Ministro() {
     const [searchQuery, setSearchQuery] = useState('');
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupData, setPopupData] = useState(null);
+
+    const [page, setPage] = useState(1);
+    const pageSize = 5;
+
+    useEffect(() => {
+        setPage(1);
+    }, [searchQuery, ministros.length]);
+
+    const paginatedMinistros = filteredMinistros.slice((page - 1) * pageSize, page * pageSize);
+
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
 
     const handleOpenPopup = (data = null) => {
         setPopupData(data);
@@ -108,7 +122,7 @@ function Ministro() {
                 </div>
                 <div className='overflow'>
                     <div className='gridCentrao-lista'>
-                        {filteredMinistros.map((ministro) => (
+                        {paginatedMinistros.map((ministro) => (
                             <div className={`gridCentrao similarAccordion pb ${ministro.min_parroco_actual == 1 ? 'CParroco' : ''}`} key={ministro.min_id}>
                                 <div className="gridCentrao grid-2colum-equal">
                                     <h3>{ministro.min_nombre}</h3>
@@ -126,8 +140,14 @@ function Ministro() {
                             </div>
                         ))}
                     </div>
-
                 </div>
+                <Pagination
+                    count={Math.ceil(filteredMinistros.length / pageSize)}
+                    page={page}
+                    onChange={handlePageChange}
+                    color="primary"
+                    style={{ marginTop: 16, marginBottom: 16 }}
+                />
             </div>
             <div className='fab-container'>
                 <Tooltip title="Agregar Confirmado">
